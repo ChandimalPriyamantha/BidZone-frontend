@@ -1,15 +1,15 @@
 import { Carousel } from "./HomPage/components/Carousel";
-import { ExploreTopBooks } from "./HomPage/components/ExploreTopBooks";
+import { ExploreTopAuctions } from "./HomPage/components/ExploreTopAuctions";
 import { Heros } from "./HomPage/components/Heros";
-import { LibraryServices } from "./HomPage/components/LibraryServices";
+import { AuctionsServices} from "./HomPage/components/AuctionsServices";
 
 export const HomePage = () => {
   return (
     <>
-      <ExploreTopBooks />
+      <ExploreTopAuctions />
       <Carousel />
       <Heros />
-      <LibraryServices />
+      <AuctionsServices />
     </>
   );
 };

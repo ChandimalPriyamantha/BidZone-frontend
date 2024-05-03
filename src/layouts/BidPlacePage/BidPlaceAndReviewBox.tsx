@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import BookModel from "../../models/BookModel";
+import BookModel from "../../models/AuctionModel";
+import AuctionModel from "../../models/AuctionModel";
 
-export const ChekoutAndReviewBox: React.FC<{
-  book: BookModel | undefined;
+export const BidPlaceAndReviewBox: React.FC<{
+  auction: AuctionModel | undefined;
   mobile: boolean;
 }> = (props) => {
   return (
@@ -19,7 +20,7 @@ export const ChekoutAndReviewBox: React.FC<{
               </p>
             </div>
             <hr/>
-           {props.book && props.book.copiesAvailable && props.book.copiesAvailable > 0 ?
+           {props.auction && props.auction.startingPrice && props.auction.startingPrice > 0 ?
            <h4 className='text-success'>
             Available
            </h4>
@@ -31,13 +32,13 @@ export const ChekoutAndReviewBox: React.FC<{
            <div className='row'>
               <p className='col-6 lead'>
              <b>
-                {props.book?.copies}
+                {props.auction?.closingTime}
              </b>
              copies
               </p>
               <p className='col-6 lead'>
              <b>
-                {props.book?.copiesAvailable}
+                {props.auction?.startingPrice}
              </b>
              available
               </p>

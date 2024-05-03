@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import BookModel from "../../models/BookModel";
+import BookModel from "../../models/AuctionModel";
 import { SpinerLoading } from "../Utils/SpinerLoading";
-import { SearchBook } from "./components/SearchBook";
+import { SearchAuctions } from "./components/SearchAuctions";
 import { Pagination } from "../Utils/Pagination";
+import AuctionModel from "../../models/AuctionModel";
 
-export const SearchBooksPage = () => {
-  const [books, setBooks] = useState<BookModel[]>([]);
+export const SearchAuctionsPage = () => {
+  const [auctions, setAuctions] = useState<AuctionModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +19,7 @@ export const SearchBooksPage = () => {
 
   useEffect(() => {
     const fetchBooks = async () => {
-      const baseUrl: string = "http://localhost:8080/api/books";
+      const baseUrl: string = "http://localhost:8080/api/auctions";
 
       let url: string = "";
 
@@ -37,7 +38,7 @@ export const SearchBooksPage = () => {
 
       const responseJson = await response.json();
 
-      const responseData = responseJson._embedded.books;
+      const responseData = responseJson._embedded.auctions;
 
       setTotalAmountOfBooks(responseJson.page.totalElements);
       setTotalPages(responseJson.page.totalPages);
@@ -47,17 +48,18 @@ export const SearchBooksPage = () => {
       for (const key in responseData) {
         loadedBooks.push({
           id: responseData[key].id,
-          title: responseData[key].title,
-          author: responseData[key].author,
+          closingTime: responseData[key].closingTime,
+          createdTime: responseData[key].createdTime,
+          startingPrice: responseData[key].startingPrice,
+          name: responseData[key].name,
           description: responseData[key].description,
-          copies: responseData[key].copies,
-          copiesAvailable: responseData[key].copiesAvailable,
           category: responseData[key].category,
           img: responseData[key].img,
+          userName: responseData[key].userName,
         });
       }
 
-      setBooks(loadedBooks);
+      setAuctions(loadedBooks);
       setIsLoading(false);
     };
     fetchBooks().catch((error: any) => {
@@ -190,8 +192,8 @@ export const SearchBooksPage = () => {
               <p>
                 {indexOfFirstBook} to {lastItem} of {totalAmountOfBooks} items:
               </p>
-              {books.map((book) => (
-                <SearchBook book={book} key={book.id} />
+              {auctions.map((auction) => (
+                <SearchAuctions auction={auction} key={auction.id} />
               ))}
             </>
           ) : (

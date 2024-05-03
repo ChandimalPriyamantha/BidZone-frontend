@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
-import BookModel from "../../models/BookModel";
 import { SpinerLoading } from "../Utils/SpinerLoading";
 import { StartReview } from "../Utils/StarsReviews";
-import React from 'react';
-import { ChekoutAndReviewBox } from "./ChekoutAndReviewBox";
+import { BidPlaceAndReviewBox } from "./BidPlaceAndReviewBox";
 import ReviewModel from "../../models/ReviewModel";
-import userEvent from "@testing-library/user-event";
-import { unstable_renderSubtreeIntoContainer } from "react-dom";
-import { error } from "console";
 import { LatestReviews } from "./LatestReviews";
 import { useOktaAuth } from "@okta/okta-react";
+import AuctionModel from "../../models/AuctionModel";
 
 
 
-export const BookCheckoutPage = () => {
+export const BidPlacePage = () => {
 
   const { authState } = useOktaAuth();
 
-  const [book, setBook] = useState<BookModel>();
+  const [auction, setAuction] = useState<AuctionModel>();
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
@@ -31,11 +27,11 @@ export const BookCheckoutPage = () => {
 
 
 
-  const bookId = window.location.pathname.split("/")[2];
+  const auctionId = window.location.pathname.split("/")[2];
 
   useEffect(() => {
     const fetchBook = async () => {
-      const baseUrl: string = `http://localhost:8080/api/books/${bookId}`;
+      const baseUrl: string = `http://localhost:8080/api/auctions/${auctionId}`;
      
       const response = await fetch(baseUrl);
 
@@ -47,18 +43,19 @@ export const BookCheckoutPage = () => {
      
      
 
-      const loadedBook: BookModel = {
+      const loadedAuction: AuctionModel = {
         id: responseJson.id,
-        title: responseJson.title,
-        author: responseJson.author,
+        closingTime: responseJson.closingTime,
+        createdTime: responseJson.createdTime,
+        startingPrice: responseJson.startingPrice,
+        name: responseJson.name,
         description: responseJson.description,
-        copies: responseJson.copies,
-        copiesAvailable: responseJson.copiesAvailable,
         category: responseJson.category,
         img: responseJson.img,
+        userName: responseJson.userName,
       };
 
-      setBook(loadedBook);
+      setAuction(loadedAuction);
       setIsLoading(false);
     };
     fetchBook().catch((error: any) => {
@@ -69,7 +66,7 @@ export const BookCheckoutPage = () => {
 
   useEffect(() => {
     const fetchBookReviews = async () =>{
-      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${bookId}`;
+      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByBookId?bookId=${auctionId}`;
       const responseReviews = await fetch(reviewUrl);
 
       if(!responseReviews.ok){
@@ -131,8 +128,8 @@ export const BookCheckoutPage = () => {
       <div className="container d-none d-lg-block">
         <div className="row mt-5">
           <div className="col-sm-2 col-md-2">
-            {book?.img ? (
-              <img src={book?.img} width="226" height="349" alt="Book"></img>
+            {auction?.img ? (
+              <img src={auction?.img} width="226" height="349" alt="Book"></img>
             ) : (
               <img
                 src={require("./../../Images/BooksImages/book-luv2code-1000.png")}
@@ -144,21 +141,21 @@ export const BookCheckoutPage = () => {
           </div>
           <div className="col-4 col-md-4 container">
             <div className="ml-2">
-              <h2>{book?.title}</h2>
-              <h5 className="text-primary">{book?.author}</h5>
-              <p className="lead">{book?.description}</p>
+              <h2>{auction?.name}</h2>
+              <h5 className="text-primary">{auction?.userName}</h5>
+              <p className="lead">{auction?.description}</p>
               <StartReview rating={totalStar} size={32}/>
             </div>
           </div>
-          <ChekoutAndReviewBox book={book} mobile={false}/>
+          <BidPlaceAndReviewBox auction={auction} mobile={false}/>
         </div>
         <hr/>
-        <LatestReviews reviews={review} bookId={book?.id} mobile={true}/>
+        <LatestReviews reviews={review} bookId={auction?.id} mobile={true}/>
       </div>
       <div className="container d-lg-none mt-5">
         <div className="d-flex justify-content-center align-items-center">
-          {book?.img ? (
-            <img src={book?.img} width="226" height="349" alt="Book"></img>
+          {auction?.img ? (
+            <img src={auction?.img} width="226" height="349" alt="Book"></img>
           ) : (
             <img
               src={require("./../../Images/BooksImages/book-luv2code-1000.png")}
@@ -170,15 +167,15 @@ export const BookCheckoutPage = () => {
         </div>
         <div className='mt-4'>
             <div className='ml-2'>
-               <h2>{book?.title}</h2>
-               <h5 className='text-primary'>{book?.author}</h5>
-               <p className='lead'>{book?.description}</p>
+               <h2>{auction?.name}</h2>
+               <h5 className='text-primary'>{auction?.userName}</h5>
+               <p className='lead'>{auction?.description}</p>
                <StartReview rating={totalStar} size={32}/>
             </div>
         </div>
-        <ChekoutAndReviewBox book={book} mobile={true}/>
+        <BidPlaceAndReviewBox auction={auction} mobile={true}/>
         <hr/>
-        <LatestReviews reviews={review} bookId={book?.id} mobile={true}/>
+        <LatestReviews reviews={review} bookId={auction?.id} mobile={true}/>
       </div>
     </div>
   );

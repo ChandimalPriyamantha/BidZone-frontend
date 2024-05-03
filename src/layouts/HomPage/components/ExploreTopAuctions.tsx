@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const ExploreTopBooks = () => {
+export const ExploreTopAuctions = () => {
     
     return(
        <div className='p-5 mb-4 bg-dark header'>

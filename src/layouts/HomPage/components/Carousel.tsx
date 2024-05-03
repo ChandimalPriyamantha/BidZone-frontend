@@ -1,22 +1,20 @@
-import { ReturnBook } from "./ReturnBook";
+import { ReturnAuction } from "./ReturnAuction";
 import { useEffect, useState } from "react";
-import BookModel from "../../../models/BookModel";
-import { error } from "console";
-import { title } from "process";
 import { SpinerLoading } from "../../Utils/SpinerLoading";
 import { Link } from "react-router-dom";
+import AuctionModel from "../../../models/AuctionModel";
 
 
 export const Carousel = () => {
     
-   const [books,setBooks] = useState<BookModel[]>([]);
+   const [auctions,setAuction] = useState<AuctionModel[]>([]);
    const [isLoading, setIsLoading] = useState(true);
    const [httpError, setHttpError] = useState(null);
    
    useEffect(() => {
         const fetchBooks = async () => {
 
-        const baseUrl: string = "http://localhost:8080/api/books";
+        const baseUrl: string = "http://localhost:8080/api/auctions";
         const url: string = `${baseUrl}?page=0&size=9`;
         const response = await fetch(url);
 
@@ -25,23 +23,24 @@ export const Carousel = () => {
         }
         
         const responseJson = await response.json();
-        const responseData = responseJson._embedded.books;
-        const loadedBooks: BookModel[] = [];
+        const responseData = responseJson._embedded.auctions;
+        const loadedAuctions: AuctionModel[] = [];
 
         for (const key in responseData){
-          loadedBooks.push({
+          loadedAuctions.push({
                id:responseData[key].id,
-               title:responseData[key].title,
-               author:responseData[key].author,
+               closingTime:responseData[key].losingTime,
+               createdTime:responseData[key].createdTime,
+               startingPrice:responseData[key].startingPrice,
+               name:responseData[key].name,
                description:responseData[key].description,
-               copies:responseData[key].copies,
-               copiesAvailable:responseData[key].copiesAvailable,
                category:responseData[key].category,
                img:responseData[key].img,
+               userName:responseData[key].userName
           });
         }
 
-        setBooks(loadedBooks);
+        setAuction(loadedAuctions);
         setIsLoading(false);
         
        };
@@ -80,22 +79,22 @@ export const Carousel = () => {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <div className="row d-flex justify-content-center align-items-center">
-             {books.slice(0,3).map(book=>(
-              <ReturnBook book={book} key={book.id} />
+             {auctions.slice(0,3).map(auction=>(
+              <ReturnAuction auction={auction} key={auction.id} />
              ))}
             </div>
           </div>
           <div className="carousel-item">
             <div className="row d-flex justify-content-center align-items-center">
-            {books.slice(3,6).map(book=>(
-              <ReturnBook book={book} key={book.id} />
+            {auctions.slice(3,6).map(auction=>(
+              <ReturnAuction auction={auction} key={auction.id} />
              ))}
             </div>
           </div>
           <div className="carousel-item">
             <div className="row d-flex justify-content-center align-items-center">
-            {books.slice(6,9).map(book=>(
-              <ReturnBook book={book} key={book.id} />
+            {auctions.slice(6,9).map(auction=>(
+              <ReturnAuction auction={auction} key={auction.id} />
              ))}
             </div>
           </div>
@@ -129,7 +128,7 @@ export const Carousel = () => {
       {/* Mobile */}
       <div className="d-lg-none mt-3">
         <div className="row d-flex justify-content-center align-items-center">
-          <ReturnBook book={books[7]} key={books[7].id} />
+          <ReturnAuction auction={auctions[7]} key={auctions[7].id} />
         </div>
       </div>
       <div className="homepage-carousel-title mt-3">

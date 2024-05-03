@@ -4,9 +4,9 @@ import "./App.css";
 import { Navebar } from "./layouts/NavbarAndFooter/Navebar";
 import { Footer } from "./layouts/NavbarAndFooter/Footer";
 import { HomePage } from "./layouts/HomePage";
-import { SearchBooksPage } from "./layouts/SearchBooks/SearchBooksPage";
+import { SearchAuctionsPage } from "./layouts/SearchAuctions/SearchAuctionsPage";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import { BookCheckoutPage } from "./layouts/BookChekoutPage/BookChekoutPage";
+import { BidPlacePage } from "./layouts/BidPlacePage/BidPlacePage";
 import { oktaConfig } from "./lib/oktaConfig";
 import { OktaAuth, toRelativeUrl} from '@okta/okta-auth-js';
 import { Security, LoginCallback } from "@okta/okta-react";
@@ -39,10 +39,10 @@ export const  App = () => {
       <HomePage/>
     </Route>
     <Route path='/search'>
-    <SearchBooksPage/>
+    <SearchAuctionsPage/>
     </Route>
     <Route path='/checkout/:bookId'>
-      <BookCheckoutPage/>
+      <BidPlacePage/>
     </Route>
     <Route path='/login' render={ () => <LoginWidget config={oktaConfig}/>}/>
     <Route path='/login/callback' component={LoginCallback}/>

@@ -2,7 +2,7 @@ import { useOktaAuth } from "@okta/okta-react";
 import { Link } from "react-router-dom";
 
 
-export const LibraryServices = () => {
+export const AuctionsServices = () => {
     const { authState } = useOktaAuth();
     return (
         <div className='container my-5'>
