@@ -12,46 +12,29 @@ export const BidPlaceAndReviewBox: React.FC<{
         props.mobile ? "card d-flex mt-5" : "card col-3 container d-flex mb-5"
       }
     >
-        <div className='card-body container'>
-            <div className="mt-3">
-              <p>
-                <b>0/5</b>
-                books checked out
-              </p>
-            </div>
-            <hr/>
-           {props.auction && props.auction.startingPrice && props.auction.startingPrice > 0 ?
-           <h4 className='text-success'>
-            Available
-           </h4>
-           :
-           <h4 className='text-danger'>
-                Wait List
-           </h4>
-           }
-           <div className='row'>
-              <p className='col-6 lead'>
-             <b>
-                {props.auction?.closingTime}
-             </b>
-             copies
-              </p>
-              <p className='col-6 lead'>
-             <b>
-                {props.auction?.startingPrice}
-             </b>
-             available
-              </p>
-           </div>
+      <div className="card-body container">
+        <div className="mt-3">
+          <h2>Auction Details</h2>
         </div>
-        <Link to="/#" className='btn btn-success btn-lg'>Sign in</Link>
-        <hr/>
-        <p className='mt-3'>
-          This number can change until placing order has been complete.
-        </p>
-        <p>
-            Sign in to be able to leave a review.
-        </p>
+        <hr />
+
+        <div className="row">
+          <p className="col-6 lead">
+            <b>Closing Time: {props.auction?.closingTime}</b>
+          </p>
+          <p className="col-6 lead">
+            <b>Starting Price: ${props.auction?.startingPrice}</b>
+          </p>
+        </div>
+      </div>
+      <Link to="/#" className="btn btn-success btn-lg">
+        Sign in
+      </Link>
+      <hr />
+      <p className="mt-3">
+      This product will be delivered after the auction closing time.
+      </p>
+      <p>Sign in to be able to leave a bid.</p>
     </div>
   );
 };
