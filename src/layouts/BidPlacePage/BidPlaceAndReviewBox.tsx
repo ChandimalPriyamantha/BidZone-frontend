@@ -16,6 +16,9 @@ export const BidPlaceAndReviewBox: React.FC<{
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
+  console.log(authState?.idToken?.claims.preferred_username);
+  
   const handleSubmit = async () => {
     try {
       const response = await fetch('http://localhost:8080/api/Bid/placeBid', {
