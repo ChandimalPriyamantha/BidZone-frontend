@@ -60,6 +60,7 @@ export const BidPlaceAndReviewBox: React.FC<{
         </div>
       </div>
       {authState?.isAuthenticated ? (
+        <div>
           <Link
             type="button"
             className="btn main-color btn-lg text-white"
@@ -68,6 +69,13 @@ export const BidPlaceAndReviewBox: React.FC<{
           >
             Place a Bid
           </Link>
+          <hr />
+                  <p className="mt-3">
+                  This product will be delivered after the auction closing time.
+                  </p>
+        </div>
+          
+          
         ) : (
           <div>
                 <Link to="/#" className="btn btn-success btn-lg">
@@ -117,6 +125,7 @@ export const BidPlaceAndReviewBox: React.FC<{
                     value={bidAmount}
                     onChange={(e) => setBidAmount(e.target.value)}
                   />
+                  
                 </div>
                 <div className=" mt-3">
                   <label className=" form-label" htmlFor="bidComment">Comment</label>
@@ -148,5 +157,5 @@ export const BidPlaceAndReviewBox: React.FC<{
           </div>
         )}
     </div>
-  );
+  )
 };
