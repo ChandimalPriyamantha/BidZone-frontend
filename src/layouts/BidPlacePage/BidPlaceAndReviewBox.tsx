@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import BookModel from "../../models/AuctionModel";
 import AuctionModel from "../../models/AuctionModel";
+import { useOktaAuth } from "@okta/okta-react";
 
 export const BidPlaceAndReviewBox: React.FC<{
   auction: AuctionModel | undefined;
   mobile: boolean;
+  
 }> = (props) => {
+  const { authState } = useOktaAuth();
   return (
     <div
       className={
@@ -16,25 +19,30 @@ export const BidPlaceAndReviewBox: React.FC<{
         <div className="mt-3">
           <h2>Auction Details</h2>
         </div>
-        <hr />
 
-        <div className="row">
-          <p className="col-6 lead">
-            <b>Closing Time: {props.auction?.closingTime}</b>
-          </p>
-          <p className="col-6 lead">
-            <b>Starting Price: ${props.auction?.startingPrice}</b>
-          </p>
-        </div>
-      </div>
-      <Link to="/#" className="btn btn-success btn-lg">
-        Sign in
-      </Link>
-      <hr />
-      <p className="mt-3">
-      This product will be delivered after the auction closing time.
-      </p>
-      <p>Sign in to be able to leave a bid.</p>
+        {authState?.isAuthenticated ? (
+          <Link
+            type="button"
+            className="btn main-color btn-lg text-white"
+            to={`/checkout/${props.auction?.id}`} 
+          >
+            Place a Bid
+          </Link>
+        ) : (
+          <Link className="btn main-color btn-lg text-white" to="/login">
+            Sign in
+          </Link>
+        )
+          }
+        <hr/>
+        <p className='mt-3'>
+          This number can change until placing order has been complete.
+        </p>
+        <p>
+            Sign in to be able to leave a review.
+        </p>
+
+    </div>
     </div>
   );
 };

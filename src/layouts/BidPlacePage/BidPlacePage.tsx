@@ -108,7 +108,7 @@ export const BidPlacePage = () => {
       setHttpError(error.message);
 
     })
-  })
+  },[])
 
   
 
