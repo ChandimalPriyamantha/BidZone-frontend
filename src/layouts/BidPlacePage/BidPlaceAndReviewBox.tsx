@@ -44,21 +44,22 @@ export const BidPlaceAndReviewBox: React.FC<{
         props.mobile ? "card d-flex mt-5" : "card col-3 container d-flex mb-5"
       }
     >
-        <div className='card-body container'>
-            <h2 className='card-title'>{props.auction?.name}</h2>
-           <div className='row'>
-              <p className='col-6 lead'>
-              <p>Closing Time</p>
-              <p>{props.auction?.closingTime}</p>
-             </p>
-              <p className='col-6 lead'>
-                <p>Starting Price</p>
-                <p>{props.auction?.startingPrice}</p>
-            
-              </p>
-           </div>
+      <div className="card-body container">
+        <div className="mt-3">
+          <h2>Auction Details</h2>
         </div>
-        {authState?.isAuthenticated ? (
+        <hr />
+
+        <div className="row">
+          <p className="col-6 lead">
+            <b>Closing Time: {props.auction?.closingTime}</b>
+          </p>
+          <p className="col-6 lead">
+            <b>Starting Price: ${props.auction?.startingPrice}</b>
+          </p>
+        </div>
+      </div>
+      {authState?.isAuthenticated ? (
           <Link
             type="button"
             className="btn main-color btn-lg text-white"
@@ -68,13 +69,21 @@ export const BidPlaceAndReviewBox: React.FC<{
             Place a Bid
           </Link>
         ) : (
-          <Link className="btn main-color btn-lg text-white" to="/login">
-            Sign Up
-          </Link>
+          <div>
+                <Link to="/#" className="btn btn-success btn-lg">
+                  Sign in
+                </Link>
+                <hr />
+                <p className="mt-3">
+                This product will be delivered after the auction closing time.
+                </p>
+                <p>Sign in to be able to leave a bid.</p>
+          </div>
+        
         )
-          }
-        <hr/>
-        {isModalOpen && (
+      }
+
+      {isModalOpen && (
           <div style={{
             position: 'fixed',
             zIndex: 1,
