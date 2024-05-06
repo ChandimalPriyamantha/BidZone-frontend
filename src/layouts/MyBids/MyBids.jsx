@@ -113,7 +113,7 @@ export default function MyBids() {                                              
                         </div>
                     
                     ):(
-                        <table className="table table-hover table-bordered ">
+                        <table className="table table-hover table-bordered">
                             <thead>
                                 <tr >
                                 <th scope="col"></th>
@@ -183,7 +183,7 @@ export default function MyBids() {                                              
                                     </tr>
                                     <tr>
                                         <td><label className="labelkey">Bade amount: </label></td>
-                                        <td colSpan={2}> <input type="text" className='labelValue textfield' value={selectedBid[3]} 
+                                        <td colSpan={2}> <input type="number" className='labelValue textfield' value={selectedBid[3]} 
                                         onChange={(e)=>{
                                             e.preventDefault()
                                             setSelectedBid([selectedBid[0],selectedBid[1],selectedBid[2],e.target.value,selectedBid[4],selectedBid[5],selectedBid[6],selectedBid[7]])
