@@ -128,7 +128,12 @@ export const Carousel = () => {
       {/* Mobile */}
       <div className="d-lg-none mt-3">
         <div className="row d-flex justify-content-center align-items-center">
-          <ReturnAuction auction={auctions[7]} key={auctions[7].id} />
+        {auctions.slice(0,3).map(auction => auction && auction.id? (
+        <ReturnAuction auction={auction} key={auction.id} />
+        ) : (
+          <div>Loading...</div>
+        ))}
+
         </div>
       </div>
       <div className="homepage-carousel-title mt-3">
