@@ -3,6 +3,7 @@ import BookModel from "../../models/AuctionModel";
 import AuctionModel from "../../models/AuctionModel";
 import { useOktaAuth } from "@okta/okta-react";
 import { useState } from "react";
+import ChatRoom from "../ChatPage/ChatRoom";
 
 export const BidPlaceAndReviewBox: React.FC<{
   auction: AuctionModel | undefined;
@@ -73,6 +74,10 @@ export const BidPlaceAndReviewBox: React.FC<{
                   <p className="mt-3">
                   This product will be delivered after the auction closing time.
                   </p>
+                <hr />
+                <Link className="btn btn-success" type="button" to={'/chat'}> Chat With Auctioneer</Link>
+                <hr />
+
         </div>
           
           
@@ -86,6 +91,7 @@ export const BidPlaceAndReviewBox: React.FC<{
                 This product will be delivered after the auction closing time.
                 </p>
                 <p>Sign in to be able to leave a bid.</p>
+                <ChatRoom/>
           </div>
         
         )
