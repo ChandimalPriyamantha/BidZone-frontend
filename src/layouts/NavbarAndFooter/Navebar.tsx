@@ -41,6 +41,19 @@ export const Navebar = () => {
                 Search Products
               </NavLink>
             </li>
+
+            {
+              authState.isAuthenticated?(
+                <li className="nav-item">
+                <NavLink className="nav-link" to="/my-bids">
+                  My Bids
+                </NavLink>
+            </li>)
+            :
+              null
+            }
+            
+          
           </ul>
           <ul className="navbar-nav ms-auto">
            {!authState.isAuthenticated?
@@ -51,6 +64,7 @@ export const Navebar = () => {
              </li>
 
              :
+             
              <li>
               <button className='btn btn-outline-light' onClick={handleLogout}>Logout</button>
              </li>
