@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {over} from 'stompjs';
 import SockJS from 'sockjs-client';
 import { useOktaAuth } from "@okta/okta-react";
+import './ChatRoom.css';
 
 var stompClient =null;
 const ChatRoom = () => {
@@ -10,20 +11,24 @@ const ChatRoom = () => {
     const [publicChats, setPublicChats] = useState([]); 
     const [tab,setTab] =useState("CHATROOM");
     const [userData, setUserData] = useState({
-        username: '',
+        username: authState?.idToken?.claims.preferred_username,
         receivername: '',
         connected: false,
         message: ''
-      });
+        });
+        
     useEffect(() => {
-      console.log(userData);
+        console.log(userData);
     }, [userData]);
+
 
     const connect =()=>{
         let Sock = new SockJS('http://localhost:8080/ws');
         stompClient = over(Sock);
         stompClient.connect({},onConnected, onError);
     }
+
+    
 
     const onConnected = () => {
         setUserData({...userData,"connected": true});
@@ -33,11 +38,11 @@ const ChatRoom = () => {
     }
 
     const userJoin=()=>{
-          var chatMessage = {
+            var chatMessage = {
             senderName: userData.username,
             status:"JOIN"
-          };
-          stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+            };
+            stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
     }
 
     const onMessageReceived = (payload)=>{
@@ -81,32 +86,32 @@ const ChatRoom = () => {
     }
     const sendValue=()=>{
             if (stompClient) {
-              var chatMessage = {
+                var chatMessage = {
                 senderName: userData.username,
                 message: userData.message,
                 status:"MESSAGE"
-              };
-              console.log(chatMessage);
-              stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
-              setUserData({...userData,"message": ""});
+                };
+                console.log(chatMessage);
+                stompClient.send("/app/message", {}, JSON.stringify(chatMessage));
+                setUserData({...userData,"message": ""});
             }
     }
 
     const sendPrivateValue=()=>{
         if (stompClient) {
-          var chatMessage = {
+            var chatMessage = {
             senderName: userData.username,
             receiverName:tab,
             message: userData.message,
             status:"MESSAGE"
-          };
-          
-          if(userData.username !== tab){
+            };
+            
+            if(userData.username !== tab){
             privateChats.get(tab).push(chatMessage);
             setPrivateChats(new Map(privateChats));
-          }
-          stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
-          setUserData({...userData,"message": ""});
+            }
+            stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
+            setUserData({...userData,"message": ""});
         }
     }
 
@@ -114,10 +119,13 @@ const ChatRoom = () => {
         const {value}=event.target;
         setUserData({...userData,"username": value});
     }
+    console.log(handleUsername)
 
-    const registerUser=()=>{
+    const registerUser = () => {
         connect();
-    }
+        setTab("CHATROOM"); // Add this line to set the tab to "CHATROOM"
+    };
+    
     return (
     <div className="container">
         {userData.connected?
@@ -166,10 +174,10 @@ const ChatRoom = () => {
                 value={userData.username}
                 onChange={handleUsername}
                 margin="normal"
-              />
-              <button type="button" onClick={registerUser}>
+                />
+                <button type="button" onClick={registerUser}>
                     Chat With Auctioneer
-              </button> 
+                </button> 
         </div>}
     </div>
     )
