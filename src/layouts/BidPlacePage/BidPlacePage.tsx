@@ -6,6 +6,7 @@ import ReviewModel from "../../models/ReviewModel";
 import { LatestReviews } from "./LatestReviews";
 import { useOktaAuth } from "@okta/okta-react";
 import AuctionModel from "../../models/AuctionModel";
+import ViewAllBids from "./ViewAllBids";
 
 
 
@@ -28,6 +29,8 @@ export const BidPlacePage = () => {
 
 
   const auctionId = window.location.pathname.split("/")[2];
+
+  console.log(auctionId);
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -144,13 +147,16 @@ export const BidPlacePage = () => {
               <h2>{auction?.name}</h2>
               <h5 className="text-primary">{auction?.userName}</h5>
               <p className="lead">{auction?.description}</p>
-              <StartReview rating={totalStar} size={32}/>
+                {/* <StartReview rating={totalStar} size={32}/> */}
             </div>
           </div>
           <BidPlaceAndReviewBox auction={auction} mobile={false}/>
         </div>
+        <div>
+          <ViewAllBids value={auctionId}/>
+        </div>
         <hr/>
-        <LatestReviews reviews={review} bookId={auction?.id} mobile={true}/>
+        {/* <LatestReviews reviews={review} bookId={auction?.id} mobile={true}/> */}
       </div>
       <div className="container d-lg-none mt-5">
         <div className="d-flex justify-content-center align-items-center">
@@ -175,7 +181,7 @@ export const BidPlacePage = () => {
         </div>
         <BidPlaceAndReviewBox auction={auction} mobile={true}/>
         <hr/>
-        <LatestReviews reviews={review} bookId={auction?.id} mobile={true}/>
+        {/* <LatestReviews reviews={review} bookId={auction?.id} mobile={true}/> */}
       </div>
     </div>
   );

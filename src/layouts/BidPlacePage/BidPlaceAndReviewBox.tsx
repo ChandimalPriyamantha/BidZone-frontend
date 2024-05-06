@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import BookModel from "../../models/AuctionModel";
 import AuctionModel from "../../models/AuctionModel";
 import { useOktaAuth } from "@okta/okta-react";
+import { useState } from "react";
 
 export const BidPlaceAndReviewBox: React.FC<{
   auction: AuctionModel | undefined;
@@ -9,6 +10,34 @@ export const BidPlaceAndReviewBox: React.FC<{
   
 }> = (props) => {
   const { authState } = useOktaAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bidAmount, setBidAmount] = useState('');
+  const [bidComment, setBidComment] = useState('');
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  console.log(authState?.idToken?.claims.preferred_username);
+  
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/Bid/placeBid', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount: bidAmount, comment: bidComment , auction_id: props.auction?.id , user_name:authState?.idToken?.claims.preferred_username , placed_at: new Date()}),
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      // Handle success (e.g., show a success message, close the modal, etc.)
+      handleCloseModal();
+    } catch (error) {
+      console.error('There was a problem with your fetch operation:', error);
+      // Handle error (e.g., show an error message)
+    }
+  };
   return (
     <div
       className={
@@ -44,5 +73,5 @@ export const BidPlaceAndReviewBox: React.FC<{
 
     </div>
     </div>
-  );
+  )
 };
