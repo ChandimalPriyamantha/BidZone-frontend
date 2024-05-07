@@ -86,14 +86,14 @@ export default function MyAuctions() {
 
     const deleteAuction = async () => {                                                  //function to delete the auction
         try{
-            const relatedBids= await axios.get(`http://localhost:8080/api/Bid/getBidOnItem/${selectedAuction[0]}`);     //relatedBids to store the bids on the auction
-            if (relatedBids.data.content.length>0){
-                toast.error("Cannot delete auction because there are bids for this",{autoClose:2000});
+            const relatedBids= await axios.get(`http://localhost:8080/api/Bid/getBidOnItem/${selectedAuction[0]}`);     //API to get the bids related to the auction
+            if (relatedBids.data.content.length>0){                                                                     //checking if there are any bids related to the auction
+                toast.error("Cannot delete auction because there are bids for this",{autoClose:2000});                  //toast.error to display error message
             }
-            else{
+            else{                                                                                                       //if there are no bids related to the auction
                 try{
                     await axios.delete(`http://localhost:8080/api/MyAuctions/deleteAuction`,{data:auction});                            //API to delete the bid
-                    toast.success("Auction deleted successfully",{autoClose:2000});
+                    toast.success("Auction deleted successfully",{autoClose:2000});                                     //toast.success to display success message
                     setSelectedAuction([]);
                 }
                 catch(e){
@@ -106,7 +106,7 @@ export default function MyAuctions() {
             toast.error("Error in loading related bids");
         }
 
-        const timeout = setTimeout(() => {
+        const timeout = setTimeout(() => {                                                                          //timeout to reload the auctions
             setMyAuctions([]);
             loadMyAuctions();
           }, 2000);
@@ -117,8 +117,8 @@ export default function MyAuctions() {
 
 
 
-    useEffect(() => {
-        loadMyAuctions();
+    useEffect(() => {                                                                   //useEffect to load the auctions
+        loadMyAuctions();                                                               //loading the auctions
     }, [myUserName,selectedAuction]);
 
 
