@@ -1,54 +1,95 @@
 import { Link } from "react-router-dom";
 import AuctionModel from "../../models/AuctionModel";
 import { useOktaAuth } from "@okta/okta-react";
-import { useState } from "react";
-import ChatRoom from "../ChatPage/ChatRoom";
 
-export const BidPlaceAndReviewBox: React.FC<{
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import React, { Dispatch, SetStateAction } from 'react';
+import axios from "axios";
+
+
+
+
+interface BidPlaceAndReviewBoxProps {
   auction: AuctionModel | undefined;
   mobile: boolean;
-}> = (props) => {
+
+  onBidPlaced: Dispatch<SetStateAction<boolean>>;
+  refreshBids: boolean; // Add this line
+}
+
+export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props) => {
   const { authState } = useOktaAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bidAmount, setBidAmount] = useState("");
-  const [bidComment, setBidComment] = useState("");
+  const [bidAmount, setBidAmount] = useState('');
+  const [bidComment, setBidComment] = useState('');
+  const [highestBidforaution, setHighestBidforaution] = useState(0);
+
+ 
+
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const [closedTime, setClosedTime] = useState(props.auction?.closingTime);
+  console.log(closedTime);
 
+
+  console.log(highestBidforaution);
   console.log(authState?.idToken?.claims.preferred_username);
+
+  
+  useEffect(() => {
+    highestBid();
+  }, [refreshTrigger]);
+
+  const highestBid = async ()=>{
+    const result = await axios.get(`http://localhost:8080/api/Bid/getHighestBid/${props.auction?.id}`);
+    console.log(result.data);
+    setHighestBidforaution(result.data);
+  }
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/Bid/placeBid", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: bidAmount,
-          comment: bidComment,
-          auction_id: props.auction?.id,
-          user_name: authState?.idToken?.claims.preferred_username,
-          placed_at: new Date(),
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+      const response = await fetch('http://localhost:8080/api/Bid/placeBid', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ amount: bidAmount, comment: bidComment, auction_id: props.auction?.id, user_name:authState?.idToken?.claims.preferred_username, placed_at: new Date()}),
+          
+        });
+      if (response.status === 201) {
+          toast.success("Bid Placed");
+          // Inside BidPlaceAndReviewBox component, where you want to refresh the bids
+        props.onBidPlaced(!props.refreshBids); // Toggle the refreshBids state
+        setRefreshTrigger(prev =>!prev);
+
+      } else {
+          toast.error("Error placing Bid");
+          throw new Error('Network response was not ok');
+
       }
-      // Handle success (e.g., show a success message, close the modal, etc.)
       handleCloseModal();
-    } catch (error) {
-      console.error("There was a problem with your fetch operation:", error);
-      // Handle error (e.g., show an error message)
-    }
-  };
+
+  } catch (error) {
+      console.error('There was a problem with your fetch operation:', error);
+      toast.error("Error placing Bid");
+  }
+ };
+
+  
+  
+
   return (
+    <>
     <div
       className={
         props.mobile ? "card d-flex mt-5" : "card col-3 container d-flex mb-5"
       }
     >
+      
       <div className="card-body container">
         <div className="mt-3">
           <h2>Auction Details</h2>
@@ -62,28 +103,45 @@ export const BidPlaceAndReviewBox: React.FC<{
           <p className="col-6 lead text-primary">
             <b>Starting Price: ${props.auction?.startingPrice}</b>
           </p>
+
+          <p className="col-6 lead">
+            <b>Highest Bid: ${highestBidforaution}</b>
+          </p>
         </div>
       </div>
       {authState?.isAuthenticated ? (
         <div>
-          <Link
-            type="button"
-            className="btn main-color btn-lg text-white"
-            to={`/checkout/${props.auction?.id}`} 
-            onClick={handleOpenModal}
-          >
-            Place a Bid
-          </Link>
-          <hr />
-                  <p className="mt-3">
-                  This product will be delivered after the auction closing time.
-                  </p>
 
-                <hr />
+          
+            {closedTime ? (
+              <div>
+                {new Date(closedTime) < new Date() ? (
+                  <p className="text-danger h3 text-align-c mx-3 ">Auction Closed</p>
+                ) : (
+                  <div>
+                      <Link
+                          type="button"
+                          className="btn main-color btn-lg text-white"
+                          to={`/checkout/${props.auction?.id}`} 
+                          onClick={handleOpenModal}
+                        >
+                          Place a Bid
+                        </Link>
+                        <hr />
+                                <p className="mt-3">
+                                This product will be delivered after the auction closing time.
+                                </p>
+                    <hr />
                 <Link className="btn btn-success" type="button" to={'/chat'}> Chat With Auctioneer</Link>
                 <hr />
-
-
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div></div>
+            )}
+           
+          
 
         </div>
           
@@ -176,8 +234,12 @@ export const BidPlaceAndReviewBox: React.FC<{
         )}
     </div>
 
+    </>
+    
+  );
+
+
     
 
-  );
 
 };
