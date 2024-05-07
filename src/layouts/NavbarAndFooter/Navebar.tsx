@@ -47,18 +47,24 @@ export const Navebar = () => {
 
                <>
 
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/listener">
-                  Add listener
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/listener">
+                    Add listener
+                  </NavLink>
+                </li>           
+                
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/my-bids">
+                    My Bids
                 </NavLink>
-              </li>           
-              
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/my-bids">
-                  My Bids
-               </NavLink>
-            </li>
-                  </>
+                </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/my-auctions">
+                    My Auctions
+                </NavLink>
+                </li>
+                
+              </>
 
             )}
           </ul>

@@ -52,9 +52,12 @@ export const App = () => {
             <Route path="/search">
               <SearchAuctionsPage />
             </Route>
-             <Route path="/my-bids">      {/*  List my bids */}
-                 <MyBids/>
-              </Route>
+            <Route path="/my-bids">      {/*  List my bids */}
+              <MyBids/>
+            </Route>
+            <Route path="/my-auctions">      {/*  List my auctions */}
+              <MyAuctions/>
+            </Route>
             <Route path="/listener"> 
               <Listener />
             </Route>
