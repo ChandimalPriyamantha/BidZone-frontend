@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import BookModel from "../../models/AuctionModel";
 import AuctionModel from "../../models/AuctionModel";
 import { useOktaAuth } from "@okta/okta-react";
 import { useState } from "react";
@@ -49,7 +48,18 @@ export const BidPlaceAndReviewBox: React.FC<{
           <h2>Auction Details</h2>
         </div>
 
-        {authState?.isAuthenticated ? (
+
+        <div className="row">
+          <p className="col-6 lead text-danger">
+            <b>Closing Time: {props.auction?.closingTime}</b>
+          </p>
+          <p className="col-6 lead text-primary">
+            <b>Starting Price: ${props.auction?.startingPrice}</b>
+          </p>
+        </div>
+      </div>
+      {authState?.isAuthenticated ? (
+        <div>
           <Link
             type="button"
             className="btn main-color btn-lg text-white"
