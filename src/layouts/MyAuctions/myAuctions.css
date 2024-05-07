@@ -1,0 +1,10 @@
+.selected-auction-box {
+    margin-inline: auto;
+    margin-top: 20px;
+    width: 600px;
+    min-height: 300px;
+    height: 450px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(104, 104, 104, 1);
+    border-radius: 10px;
+}

@@ -88,6 +88,7 @@ export default function MyBids() {                                              
             toast.error("Error deleting bid");                      //toast message to show the error message
         }
 
+        setMyBids([]);                                      //setting the myBids to empty
         loadMyBids();                                                       //loadMyBids function to get the updated bids
         
     }
@@ -99,7 +100,7 @@ export default function MyBids() {                                              
         
         setMyBids([]);                                      //setting the myBids to empty
         loadMyBids();                                       //loadMyBids function to get the bids placed by the user
-    },[myUserName])                                                              //dependency array to re-run the useEffect when myUserName changes
+    },[myUserName,selectedBid])                                                              //dependency array to re-run the useEffect when myUserName changes
 
   return (
         <div className="container main-box">
@@ -108,7 +109,7 @@ export default function MyBids() {                                              
 
                 <div className="col-sm-6 table-box">
                     {myBids.length === 0 ? (
-                        <div className="alert alert-warning" role="alert">
+                        <div className="alert" role="alert">
                             No Bids found
                         </div>
                     
@@ -153,7 +154,7 @@ export default function MyBids() {                                              
                         
                             {
                                 selectedBid.length === 0 ? (
-                                    <div className="alert  alert" role="alert">
+                                    <div className="alert" role="alert">
                                         No Bids selected
                                     </div>
                                 ):(

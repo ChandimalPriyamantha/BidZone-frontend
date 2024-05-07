@@ -52,17 +52,17 @@ export const Navebar = () => {
                     Add listener
                   </NavLink>
                 </li>           
-                
-                <li className="nav-item">
-                  <NavLink className="nav-link" to="/my-bids">
-                    My Bids
-                </NavLink>
-                </li>
                 <li className="nav-item">
                   <NavLink className="nav-link" to="/my-auctions">
                     My Auctions
                 </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/my-bids">
+                    My Bids
+                </NavLink>
+                </li>
+                
                 
               </>
 
