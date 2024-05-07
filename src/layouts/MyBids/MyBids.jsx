@@ -183,12 +183,15 @@ export default function MyBids() {                                              
                                     </tr>
                                     <tr>
                                         <td><label className="labelkey">Bade amount: </label></td>
-                                        <td colSpan={2}> <input type="number" className='labelValue textfield' value={selectedBid[3]} 
+                                        <td colSpan={2}> 
+                                        <label className='labelValue'>{selectedBid[3]}</label>
+                                        {/* <input type="number" className='labelValue textfield' value={selectedBid[3]} 
                                         onChange={(e)=>{
                                             e.preventDefault()
                                             setSelectedBid([selectedBid[0],selectedBid[1],selectedBid[2],e.target.value,selectedBid[4],selectedBid[5],selectedBid[6],selectedBid[7]])
 
-                                        }}></input> </td>
+                                        }}></input>  */}
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><label className="labelkey">Comment: </label></td>
