@@ -84,10 +84,10 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
         <hr />
 
         <div className="row">
-          <p className="col-6 lead">
+          <p className="col-6 lead text-danger">
             <b>Closing Time: {props.auction?.closingTime}</b>
           </p>
-          <p className="col-6 lead">
+          <p className="col-6 lead text-primary">
             <b>Starting Price: ${props.auction?.startingPrice}</b>
           </p>
 
