@@ -40,14 +40,22 @@ export const Navebar = () => {
                 Search Products
               </NavLink>
             </li>
+
             {!authState.isAuthenticated ? (
               <li className="nav-item"></li>
             ) : (
+               <>
               <li className="nav-item">
                 <NavLink className="nav-link" to="/listener">
                   Add listener
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/my-bids">
+                  My Bids
+               </NavLink>
+            </li>
+                  </>)
             )}
           </ul>
           <ul className="navbar-nav ms-auto">
@@ -71,6 +79,7 @@ export const Navebar = () => {
                 </button>
               </li>
             )}
+
           </ul>
         </div>
       </div>
