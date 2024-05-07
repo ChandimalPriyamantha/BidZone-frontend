@@ -1,15 +1,20 @@
 import { Link } from "react-router-dom";
 import AuctionModel from "../../models/AuctionModel";
 import { useOktaAuth } from "@okta/okta-react";
+
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import React, { Dispatch, SetStateAction } from 'react';
 import axios from "axios";
 
+
+
+
 interface BidPlaceAndReviewBoxProps {
   auction: AuctionModel | undefined;
   mobile: boolean;
+
   onBidPlaced: Dispatch<SetStateAction<boolean>>;
   refreshBids: boolean; // Add this line
 }
@@ -20,6 +25,10 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
   const [bidAmount, setBidAmount] = useState('');
   const [bidComment, setBidComment] = useState('');
   const [highestBidforaution, setHighestBidforaution] = useState(0);
+
+ 
+
+
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
@@ -29,6 +38,7 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
 
   console.log(highestBidforaution);
   console.log(authState?.idToken?.claims.preferred_username);
+
   
   useEffect(() => {
     highestBid();
@@ -59,8 +69,10 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
       } else {
           toast.error("Error placing Bid");
           throw new Error('Network response was not ok');
+
       }
       handleCloseModal();
+
   } catch (error) {
       console.error('There was a problem with your fetch operation:', error);
       toast.error("Error placing Bid");
@@ -69,6 +81,7 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
 
   
   
+
   return (
     <>
     <div
@@ -81,7 +94,7 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
         <div className="mt-3">
           <h2>Auction Details</h2>
         </div>
-        <hr />
+
 
         <div className="row">
           <p className="col-6 lead text-danger">
@@ -98,6 +111,7 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
       </div>
       {authState?.isAuthenticated ? (
         <div>
+
           
             {closedTime ? (
               <div>
@@ -117,6 +131,9 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
                                 <p className="mt-3">
                                 This product will be delivered after the auction closing time.
                                 </p>
+                    <hr />
+                <Link className="btn btn-success" type="button" to={'/chat'}> Chat With Auctioneer</Link>
+                <hr />
                   </div>
                 )}
               </div>
@@ -125,6 +142,7 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
             )}
            
           
+
         </div>
           
           
@@ -138,8 +156,14 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
                 This product will be delivered after the auction closing time.
                 </p>
                 <p>Sign in to be able to leave a bid.</p>
+
+                {/* <ChatRoom/> */}
           </div>
         
+
+        
+        
+
         )
       }
 
@@ -209,7 +233,13 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
           </div>
         )}
     </div>
+
     </>
     
-  )
+  );
+
+
+    
+
+
 };

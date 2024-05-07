@@ -1,0 +1,94 @@
+.main-box {
+    min-width: 100%;
+    height: 100%;
+}
+
+.table-box {
+    
+    margin-inline: auto;
+    margin-top: 20px;
+    width: 800px;
+    min-height: 300px;
+    height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(104, 104, 104, 1);
+    border-radius: 10px;
+}
+
+.selected-bid-box {
+    margin-inline: auto;
+    margin-top: 20px;
+    width: 600px;
+    min-height: 300px;
+    height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(104, 104, 104, 1);
+    border-radius: 10px;
+}
+
+.table-body:hover {
+    cursor: pointer;
+}
+
+.dataTable {
+    width: 100%;
+    
+}
+
+.labelkey {
+    font-weight: bold;
+}
+
+.labelValue {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+
+    padding-left: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    background-color: #ffffff;
+
+    border-radius: 10px;
+    border: 1px solid #a1a1a138;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.textfield:hover {
+    border: 1.5px solid #00000038;
+    box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.formBg{
+    width : 100%;
+    min-height: 200px;
+
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 30px;
+    padding-bottom: 10px;
+
+    
+    
+
+}
+
+.alert {
+    margin-inline: auto;
+    margin-top: 10%;
+    text-align: center;
+}
+
+.image{
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+}
+
+
