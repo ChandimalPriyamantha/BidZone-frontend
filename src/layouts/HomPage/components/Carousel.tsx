@@ -133,7 +133,6 @@ export const Carousel = () => {
         ) : (
           <div>Loading...</div>
         ))}
-
         </div>
       </div>
       <div className="homepage-carousel-title mt-3">
