@@ -7,6 +7,9 @@ import { LatestReviews } from "./LatestReviews";
 import { useOktaAuth } from "@okta/okta-react";
 import AuctionModel from "../../models/AuctionModel";
 import ViewAllBids from "./ViewAllBids";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -17,15 +20,20 @@ export const BidPlacePage = () => {
   const [auction, setAuction] = useState<AuctionModel>();
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
-
   // review state
   const [review, setReview] = useState<ReviewModel[]>([])
   const [totalStar, setTotalStar] = useState(0);
   const [isLoadingReview, setIsLoadingReview] = useState(true);
-
   // Loans Count State
   const [currentLoansCount, setCurrentLoansCount] = useState(0);
 
+
+  // In BidPlacePage
+const [refreshBids, setRefreshBids] = useState(false);
+
+const setReloadBids = () => {
+  setRefreshBids(!refreshBids);
+};
 
 
   const auctionId = window.location.pathname.split("/")[2];
@@ -44,7 +52,9 @@ export const BidPlacePage = () => {
 
       const responseJson = await response.json();
      
-     
+      const refreshBid = () => {
+        setRefreshBids(!refreshBids);
+      };
 
       const loadedAuction: AuctionModel = {
         id: responseJson.id,
@@ -128,6 +138,7 @@ export const BidPlacePage = () => {
   }
   return (
     <div>
+              <ToastContainer/>
       <div className="container d-none d-lg-block">
         <div className="row mt-5">
           <div className="col-sm-2 col-md-2">
@@ -150,11 +161,20 @@ export const BidPlacePage = () => {
                 {/* <StartReview rating={totalStar} size={32}/> */}
             </div>
           </div>
-          <BidPlaceAndReviewBox auction={auction} mobile={false}/>
+          
+          {/* <BidPlaceAndReviewBox auction={auction} mobile={false} onBidPlaced={setReloadBids} />
+           */}
+           <BidPlaceAndReviewBox auction={auction} mobile={false} onBidPlaced={setReloadBids} refreshBids={refreshBids} />
+
         </div>
-        <div>
-          <ViewAllBids value={auctionId}/>
-        </div>
+      
+          
+
+          
+            {/* <div>
+              <ViewAllBids value={auctionId} refreshBid={refreshBids} />
+            </div> */}
+
         <hr/>
         {/* <LatestReviews reviews={review} bookId={auction?.id} mobile={true}/> */}
       </div>
@@ -179,7 +199,11 @@ export const BidPlacePage = () => {
                <StartReview rating={totalStar} size={32}/>
             </div>
         </div>
-        <BidPlaceAndReviewBox auction={auction} mobile={true}/>
+        {/* <BidPlaceAndReviewBox auction={auction} mobile={false} onBidPlaced={setReloadBids} />
+         */}
+         <BidPlaceAndReviewBox auction={auction} mobile={false} onBidPlaced={setReloadBids} refreshBids={refreshBids} />
+
+
         <hr/>
         {/* <LatestReviews reviews={review} bookId={auction?.id} mobile={true}/> */}
       </div>
