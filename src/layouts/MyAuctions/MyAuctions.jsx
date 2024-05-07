@@ -61,9 +61,7 @@ export default function MyAuctions() {
 
 
     const loadSelectedAuction = async (index) => {                                        //loadSelectedAuction to load the selected auction
-        setSelectedAuction(myAuctions[index]);                                            //setting the selected auction to the selectedAuction
-        
-        
+        setSelectedAuction(myAuctions[index]);                                            //setting the selected auction to the selectedAuction   
     }
 
 
@@ -71,26 +69,22 @@ export default function MyAuctions() {
         
         try{
 
-            const update= await axios.put(`http://localhost:8080/api/MyAuctions/updateAuction`,auction);  
-                toast.success("Auction updated successfully",{autoClose:2000});
+            const update= await axios.put(`http://localhost:8080/api/MyAuctions/updateAuction`,auction);        //API to update the auction
+                toast.success("Auction updated successfully",{autoClose:2000});                                 //toast.success to display success message
                                       
-
-            
-            
-            
         }
         catch(e){
-            toast.error("Error updating Auction");
+            toast.error("Error updating Auction");                                                              //toast.error to display error message
         }
 
-        //loadMyAuctions();
+        
           
 
         
     }
 
 
-    const deleteAuction = async () => {                                                  //deleteAuction to delete the auction
+    const deleteAuction = async () => {                                                  //function to delete the auction
         try{
             const relatedBids= await axios.get(`http://localhost:8080/api/Bid/getBidOnItem/${selectedAuction[0]}`);     //relatedBids to store the bids on the auction
             if (relatedBids.data.content.length>0){
