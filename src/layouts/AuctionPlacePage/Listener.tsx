@@ -111,10 +111,10 @@ export const Listener = () => {
 
       const submitNewAuctionResponse = await fetch(url, requestOptions);
       if (!submitNewAuctionResponse.ok) {
+        setIsloading(false);
         throw new Error("Somthing went wrong!");
-        
       }
-      
+
       setIsloading(false);
       setClosingTime("");
       setCreatedTime("");
