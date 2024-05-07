@@ -45,7 +45,7 @@ export default function MyAuctions() {
         myUserName = authState?.idToken?.claims.preferred_username;             //myUserName to store the username of the user
 
         try{
-            const myAuctions = await axios.get(`http://localhost:8080/api/MyAuctions/getMyAuctions/${myUserName}`);     //auctions to store the auctions from the database
+            const myAuctions = await axios.get(`http://localhost:8080/api/MyAuctions/getMyAuctions/${myUserName}`);     //API to get auctions related to myUserName 
             await myAuctions.data.map(()=>{                                                                                  //mapping the data to get the required fields
                 setMyAuctions(myAuctions.data);                                                                                  //setting the auctions to myAuctions
             });
