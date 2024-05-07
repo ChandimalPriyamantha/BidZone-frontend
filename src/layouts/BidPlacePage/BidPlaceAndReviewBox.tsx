@@ -91,7 +91,7 @@ export const BidPlaceAndReviewBox: React.FC<{
                 This product will be delivered after the auction closing time.
                 </p>
                 <p>Sign in to be able to leave a bid.</p>
-                <ChatRoom/>
+                {/* <ChatRoom/> */}
           </div>
         
         )
