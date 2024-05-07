@@ -11,7 +11,11 @@ import { oktaConfig } from "./lib/oktaConfig";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
 import { Security, LoginCallback } from "@okta/okta-react";
 import LoginWidget from "./Auth/LoginWidget";
+
+import MyBids from "./layouts/MyBids/MyBids";
+
 import { Listener } from "./layouts/AuctionPlacePage/Listener";
+
 
 const oktaAuth = new OktaAuth(oktaConfig);
 
@@ -27,6 +31,8 @@ export const App = () => {
   };
   return (
     <div className="d-flex flex-column min-vh-100">
+
+
       <Security
         oktaAuth={oktaAuth}
         restoreOriginalUri={restoreOriginalUri}
@@ -45,6 +51,9 @@ export const App = () => {
             <Route path="/search">
               <SearchAuctionsPage />
             </Route>
+             <Route path="/my-bids">      {/*  List my bids */}
+                 <MyBids/>
+              </Route>
             <Route path="/listener"> 
               <Listener />
             </Route>
@@ -60,6 +69,7 @@ export const App = () => {
         </div>
         <Footer />
       </Security>
+
     </div>
   );
 };
