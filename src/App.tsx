@@ -12,6 +12,7 @@ import { OktaAuth, toRelativeUrl} from '@okta/okta-auth-js';
 import { Security, LoginCallback } from "@okta/okta-react";
 import LoginWidget from "./Auth/LoginWidget";
 import MyBids from "./layouts/MyBids/MyBids";
+import MyAuctions from "./layouts/MyAuctions/MyAuctions";
 
 const oktaAuth = new OktaAuth(oktaConfig);
 
@@ -42,6 +43,9 @@ export const  App = () => {
 
     <Route path="/my-bids">      {/*  List my bids */}
       <MyBids/>
+    </Route>
+    <Route path="/my-auctions">      {/*  List my auctions */}
+      <MyAuctions/>
     </Route>
 
     <Route path='/search'>
