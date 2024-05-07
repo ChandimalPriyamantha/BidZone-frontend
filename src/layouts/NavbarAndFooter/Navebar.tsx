@@ -3,11 +3,10 @@ import { useOktaAuth } from "@okta/okta-react";
 import { SpinerLoading } from "../Utils/SpinerLoading";
 
 export const Navebar = () => {
+  const { oktaAuth, authState } = useOktaAuth();
 
-  const {oktaAuth , authState} = useOktaAuth();
-
-  if(!authState){
-    return <SpinerLoading/>
+  if (!authState) {
+    return <SpinerLoading />;
   }
 
   const handleLogout = async () => oktaAuth.signOut();
@@ -41,23 +40,37 @@ export const Navebar = () => {
                 Search Products
               </NavLink>
             </li>
+            {!authState.isAuthenticated ? (
+              <li className="nav-item"></li>
+            ) : (
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/listener">
+                  Add listener
+                </NavLink>
+              </li>
+            )}
           </ul>
           <ul className="navbar-nav ms-auto">
-           {!authState.isAuthenticated?
-               <li className="nav-item m-1">
-               <Link type="button" className="btn btn-outline-light" to='/login'>
-                 Sign in
-               </Link>
-             </li>
-
-             :
-             <li>
-              <button className='btn btn-outline-light' onClick={handleLogout}>Logout</button>
-             </li>
-          
-          }
-           
-
+            {!authState.isAuthenticated ? (
+              <li className="nav-item m-1">
+                <Link
+                  type="button"
+                  className="btn btn-outline-light"
+                  to="/login"
+                >
+                  Sign in
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <button
+                  className="btn btn-outline-light"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>
