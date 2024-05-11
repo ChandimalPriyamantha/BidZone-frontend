@@ -126,7 +126,7 @@ export default function MyBids() {
                       loadSelectedBid(index);
                     }}
                   >
-                    <th scope="row">{index + 1}</th>
+                    <td scope="row">{index + 1}</td>
                     <td>{bid[0]}</td>
                     <td>{bid[1]}</td>
                     <td>{bid[5]}</td>
@@ -153,14 +153,7 @@ export default function MyBids() {
                     <tr>
                       <td><label className="labelkey">Auctioneer: </label></td>
                       <td> <label className='labelValue'>{selectedBid[0]}</label> </td>
-                      {
-                        selectedBid[8]=="" || selectedBid[8]==null? (
-                          <th rowSpan={3}><center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png" alt="auction image" className="img-thumbnail image"/></center></th>
-                        ):
-                        (
-                          <th rowSpan={3}><center><img src={selectedBid[8]} alt="auction image" className="img-thumbnail image"/></center></th>
-                        )
-                      }
+                      
                     </tr>
 
                     <tr>
@@ -175,7 +168,7 @@ export default function MyBids() {
 
                     <tr>
                       <td><label className="labelkey">Bade amount: </label></td>
-                      <td colSpan={2}> 
+                      <td > 
                         <label className='labelValue'>{selectedBid[3]}</label>
                         {/* <input type="number" className='labelValue textfield' value={selectedBid[3]} 
                         onChange={(e)=>{
@@ -191,7 +184,7 @@ export default function MyBids() {
                         <label className="labelkey">Comment: </label>
                       </td>
 
-                      <td colSpan={2}>
+                      <td >
                         <textarea
                           rows={4}
                           className="labelValue textfield"
