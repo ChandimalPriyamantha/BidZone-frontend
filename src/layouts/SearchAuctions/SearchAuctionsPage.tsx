@@ -95,10 +95,10 @@ export const SearchAuctionsPage = () => {
 
   const categoryField = (value: string) => {
     setCurrentPage(1);
-    if(value.toLowerCase() === 'fe' || 
-       value.toLowerCase() === 'be' ||
-       value.toLowerCase() === 'data' ||
-       value.toLowerCase() === 'devops')
+    if(value.toLowerCase() === 'electronic' || 
+       value.toLowerCase() === 'fashion & beauty' ||
+       value.toLowerCase() === 'Fashion & Beauty' ||
+       value.toLowerCase() === 'Home & Garden')
       {
        setCategorySelection(value);
        setSearchUrl(`/search/findByCategory?category=${value}&page=0&size=${booksPerPage}`)
@@ -160,24 +160,24 @@ export const SearchAuctionsPage = () => {
                       All
                     </a>
                   </li>
-                  <li onClick={() => categoryField('FE')}>
+                  <li onClick={() => categoryField('Electronic')}>
                     <a className="dropdown-item" href="#">
-                      Front End
+                    Electronic
                     </a>
                   </li >
-                  <li onClick={() => categoryField('BE')}>
+                  <li onClick={() => categoryField('Fashion & Beauty')}>
                     <a className="dropdown-item" href="#">
-                      Back End
+                    Fashion & Beauty
                     </a>
                   </li>
-                  <li onClick={() => categoryField('Data')}>
+                  <li onClick={() => categoryField('Agriculture')}>
                     <a className="dropdown-item" href="#">
-                      Data
+                    Agriculture
                     </a>
                   </li>
-                  <li onClick={() => categoryField('DevOps')}>
+                  <li onClick={() => categoryField('Home & Garden')}>
                     <a className="dropdown-item" href="#">
-                      DevOps
+                    Home & Garden
                     </a>
                   </li>
                 </ul>

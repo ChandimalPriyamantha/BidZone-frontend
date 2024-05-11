@@ -23,6 +23,7 @@ export const Listener = () => {
   // to handle Spring Loading
   const [isLoading, setIsloading] = useState(false);
 
+  // to get username from okta 
   useEffect(() => {
     if (authState && authState.isAuthenticated) {
       oktaAuth.getUser().then((user) => {
@@ -36,17 +37,20 @@ export const Listener = () => {
     }
   }, [authState, oktaAuth]);
 
+  // to handle categery selection 
   function categoryField(value: string) {
     setCategory(value);
   }
 
+  // to convert image type into blob type
   async function base64ConversionForImages(e: any) {
     if (e.target.files[0]) {
       getBase64(e.target.files[0]);
-      setCreatedTime(formattedDateTime);
+      setCreatedTime(formattedDateTime); // to handle current date & time
     }
   }
 
+  // to create the format of time & date to save into database
   const formatDateTimeForDatabase = (dateTime: Date): string => {
     const year = dateTime.getFullYear();
     const month = dateTime.getMonth() + 1;
@@ -66,6 +70,7 @@ export const Listener = () => {
   // Format currentDateTime for database
   const formattedDateTime = formatDateTimeForDatabase(new Date());
 
+  // to handle reading of images
   function getBase64(file: any) {
     let reader = new FileReader();
     reader.readAsDataURL(file);
@@ -77,6 +82,7 @@ export const Listener = () => {
     };
   }
 
+  // to handle submition of new auction
   async function submitNewAuction() {
     setIsloading(true);
     const url = `http://localhost:8080/api/auction/addAuction`;
