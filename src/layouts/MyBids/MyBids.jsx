@@ -2,7 +2,7 @@ import React from "react";
 import "./myBids.css";
 import { useEffect, useState } from "react";
 import { useOktaAuth } from "@okta/okta-react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -224,6 +224,7 @@ export default function MyBids() {
                         >
                           Delete
                         </button>
+                        <Link type='button' className='btn btn-primary btn-sm' style={{marginLeft:"13px"}} to={'/chat'}>Chat with Auctioneer</Link>
                       </td>
                     </tr>
                   </tbody>
