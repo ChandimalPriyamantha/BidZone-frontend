@@ -73,33 +73,36 @@ export default function MyBids() {
     loadMyBids(); //loadMyBids function to get the updated bids
   };
 
-  const deleteBid = async () => {
-    //deleteBid function to delete the bid
+    const deleteBid = async () => {                                                                                 //deleteBid function to delete the bid
 
-    try {
-      await axios.delete(`http://localhost:8080/api/MyBids/deleteBid`, {
-        data: bid,
-      }); //API to delete the bid
-      toast.success("Bid deleted successfully", { autoClose: 2000 }); //toast message to show the success message
-      setSelectedBid([]); //setting the selectedBid to empty
-    } catch (e) {
-      toast.error("Error deleting bid"); //toast message to show the error message
+        try{
+            await axios.delete(`http://localhost:8080/api/MyBids/deleteBid`,{data:bid});                            //API to delete the bid
+            toast.success("Bid deleted successfully",{autoClose:2000});                 //toast message to show the success message
+            setSelectedBid([]);                                     //setting the selectedBid to empty
+        }
+        catch(e){
+            toast.error("Error deleting bid");                      //toast message to show the error message
+        }
+
+        setMyBids([]);                                      //setting the myBids to empty
+        loadMyBids();                                                       //loadMyBids function to get the updated bids
+        
     }
 
-    loadMyBids(); //loadMyBids function to get the updated bids
-  };
 
-  useEffect(() => {
-    //useEffect to load the bids placed by the user
 
-    setMyBids([]); //setting the myBids to empty
-    loadMyBids(); //loadMyBids function to get the bids placed by the user
-  }, [myUserName]); //dependency array to re-run the useEffect when myUserName changes
+    useEffect(() => {                                                            //useEffect to load the bids placed by the user
+        
+        
+        setMyBids([]);                                      //setting the myBids to empty
+        loadMyBids();                                       //loadMyBids function to get the bids placed by the user
+    },[myUserName,selectedBid]);                                                              //dependency array to re-run the useEffect when myUserName changes
+
 
   return (
-    <div className="container main-box">
+    <div className="container main-box">                            
       <div className="row">
-        <div className="col-sm-6 table-box">
+        <div className="col-sm-6 table-box">                        {/*table-box to display the bids placed by the user*/}
           {myBids.length === 0 ? (
             <div className="alert alert-warning" role="alert">
               No Bids found
@@ -137,129 +140,96 @@ export default function MyBids() {
 
         <div className="col-sm-6 selected-bid-box">
           <div className="formBg">
-            {selectedBid.length === 0 ? (
-              <div className="alert  alert" role="alert">
-                No Bids selected
-              </div>
-            ) : (
-              <table className="dataTable">
-                <tbody>
-                  <tr>
-                    <td>
-                      <label className="labelkey">Auctioneer: </label>
-                    </td>
-                    <td>
-                      {" "}
-                      <label className="labelValue">
-                        {selectedBid[0]}
-                      </label>{" "}
-                    </td>
-                    {selectedBid[8] == "" || selectedBid[8] == null ? (
-                      <th rowSpan={3}>
-                        <center>
-                          <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png"
-                            alt="auction image"
-                            className="img-thumbnail image"
-                          />
-                        </center>
-                      </th>
-                    ) : (
-                      <th rowSpan={3}>
-                        <center>
-                          <img
-                            src={selectedBid[8]} 
-                            alt="auction image"
-                            className="img-thumbnail image"
-                          />
-                          {console.log(selectedBid[8])}
-                        </center>
-                      </th>
-                    )}
-                  </tr>
-                  <tr>
-                    <td>
-                      <label className="labelkey">Auction: </label>
-                    </td>
-                    <td>
-                      {" "}
-                      <label className="labelValue">
-                        {selectedBid[1]}
-                      </label>{" "}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label className="labelkey">Bade at: </label>
-                    </td>
-                    <td>
-                      {" "}
-                      <label className="labelValue">
-                        {selectedBid[5]}
-                      </label>{" "}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label className="labelkey">Bade amount: </label>
-                    </td>
-                    <td colSpan={2}>
-                      <label className="labelValue">{selectedBid[3]}</label>
-                      {/* <input type="number" className='labelValue textfield' value={selectedBid[3]} 
-                                        onChange={(e)=>{
-                                            e.preventDefault()
-                                            setSelectedBid([selectedBid[0],selectedBid[1],selectedBid[2],e.target.value,selectedBid[4],selectedBid[5],selectedBid[6],selectedBid[7]])
+            
+            {
+              selectedBid.length === 0 ? (
+                <div className="alert" role="alert">
+                  No Bids selected
+                </div>
+              ):
+              (
+                <table className='dataTable'>
+                  <tbody>
+                    <tr>
+                      <td><label className="labelkey">Auctioneer: </label></td>
+                      <td> <label className='labelValue'>{selectedBid[0]}</label> </td>
+                      {
+                        selectedBid[8]=="" || selectedBid[8]==null? (
+                          <th rowSpan={3}><center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png" alt="auction image" className="img-thumbnail image"/></center></th>
+                        ):
+                        (
+                          <th rowSpan={3}><center><img src={selectedBid[8]} alt="auction image" className="img-thumbnail image"/></center></th>
+                        )
+                      }
+                    </tr>
 
-                                        }}></input>  */}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <label className="labelkey">Comment: </label>
-                    </td>
-                    <td colSpan={2}>
-                      <textarea
-                        rows={4}
-                        className="labelValue textfield"
-                        value={selectedBid[4]}
-                        onChange={(e) => {
-                          e.preventDefault();
-                          setSelectedBid([
-                            selectedBid[0],
-                            selectedBid[1],
-                            selectedBid[2],
-                            selectedBid[3],
-                            e.target.value,
-                            selectedBid[5],
-                            selectedBid[6],
-                            selectedBid[7],
-                          ]);
-                        }}
-                      ></textarea>
-                    </td>
-                  </tr>
+                    <tr>
+                      <td><label className="labelkey">Auction: </label></td>
+                      <td> <label className='labelValue'>{selectedBid[1]}</label> </td>
+                    </tr>
 
-                  <tr>
-                    <td colSpan={3}>
-                      &nbsp;&nbsp;&nbsp;&nbsp;
-                      <button
-                        className="btn btn-success btn-sm"
-                        onClick={updateBid}
-                      >
-                        Update
-                      </button>{" "}
-                      &nbsp;&nbsp;
-                      <button
-                        className="btn btn-danger btn-sm"
-                        onClick={deleteBid}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            )}
+                    <tr>
+                      <td><label className="labelkey">Bade at: </label></td>
+                      <td> <label className='labelValue'>{selectedBid[5]}</label> </td>
+                    </tr>
+
+                    <tr>
+                      <td><label className="labelkey">Bade amount: </label></td>
+                      <td colSpan={2}> 
+                        <label className='labelValue'>{selectedBid[3]}</label>
+                        {/* <input type="number" className='labelValue textfield' value={selectedBid[3]} 
+                        onChange={(e)=>{
+                            e.preventDefault()
+                            setSelectedBid([selectedBid[0],selectedBid[1],selectedBid[2],e.target.value,selectedBid[4],selectedBid[5],selectedBid[6],selectedBid[7]])
+
+                        }}></input>  */}
+                      </td>
+                    </tr>
+                    
+                    <tr>
+                      <td>
+                        <label className="labelkey">Comment: </label>
+                      </td>
+
+                      <td colSpan={2}>
+                        <textarea
+                          rows={4}
+                          className="labelValue textfield"
+                          value={selectedBid[4]}
+                          onChange={(e) => {
+                            e.preventDefault();
+                            setSelectedBid([
+                              selectedBid[0], selectedBid[1], selectedBid[2], selectedBid[3], e.target.value, selectedBid[5], selectedBid[6], selectedBid[7],
+                            ]);
+                          }}
+                        >
+                        </textarea>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td colSpan={3}>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button
+                          className="btn btn-success btn-sm"
+                          onClick={updateBid}
+                        >
+                          Update
+                        </button>{" "}
+
+                        &nbsp;&nbsp;
+                        <button
+                          className="btn btn-danger btn-sm"
+                          onClick={deleteBid}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              )
+            }
           </div>
         </div>
 
