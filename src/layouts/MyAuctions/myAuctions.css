@@ -8,3 +8,7 @@
     box-shadow: 0 0 10px rgba(104, 104, 104, 1);
     border-radius: 10px;
 }
+
+.textfield {
+    font-size: 15px;
+}
