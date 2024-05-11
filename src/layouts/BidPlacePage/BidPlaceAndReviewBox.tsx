@@ -33,11 +33,8 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
   const handleCloseModal = () => setIsModalOpen(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [closedTime, setClosedTime] = useState(props.auction?.closingTime);
-  console.log(closedTime);
 
 
-  console.log(highestBidforaution);
-  console.log(authState?.idToken?.claims.preferred_username);
 
   
   useEffect(() => {
@@ -46,7 +43,7 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
 
   const highestBid = async ()=>{
     const result = await axios.get(`http://localhost:8080/api/Bid/getHighestBid/${props.auction?.id}`);
-    console.log(result.data);
+   
     setHighestBidforaution(result.data);
   }
 
@@ -74,7 +71,6 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (props)
       handleCloseModal();
 
   } catch (error) {
-      console.error('There was a problem with your fetch operation:', error);
       toast.error("Error placing Bid");
   }
  };
