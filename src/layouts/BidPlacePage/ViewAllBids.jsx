@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react'
 export default function ViewAllBids(props) {
     const [bids, setBids] = useState([]);
     let auction_id = props.value; 
-
+    
 
     useEffect(() => {
         fetchBids();
-    }, []);
+    }, [props.refreshBids]);
 
     const fetchBids = async () => {
         try {

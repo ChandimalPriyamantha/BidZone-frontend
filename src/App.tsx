@@ -16,6 +16,7 @@ import MyBids from "./layouts/MyBids/MyBids";
 import MyAuctions from "./layouts/MyAuctions/MyAuctions";
 
 import { Listener } from "./layouts/AuctionPlacePage/Listener";
+import ChatRoom from "./layouts/ChatPage/ChatRoom";
 
 
 const oktaAuth = new OktaAuth(oktaConfig);
@@ -32,8 +33,6 @@ export const App = () => {
   };
   return (
     <div className="d-flex flex-column min-vh-100">
-
-
       <Security
         oktaAuth={oktaAuth}
         restoreOriginalUri={restoreOriginalUri}
@@ -60,6 +59,9 @@ export const App = () => {
             </Route>
             <Route path="/listener"> 
               <Listener />
+            </Route>
+            <Route path='/chat'>
+              <ChatRoom/>
             </Route>
             <Route path="/checkout/:bookId">
               <BidPlacePage />
