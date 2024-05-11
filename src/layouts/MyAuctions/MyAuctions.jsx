@@ -141,7 +141,7 @@ export default function MyAuctions() {
                             <th scope="col"></th>
                             <th scope="col">Item</th>
                             <th scope="col">Category</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Price ($)</th>
                             <th scope="col">Closing time</th>
                             
                             </tr>
@@ -208,7 +208,7 @@ export default function MyAuctions() {
                                         <td> <label className='labelValue'>{selectedAuction[2]}</label> </td>
                                     </tr>
                                     <tr>
-                                        <td><label className="labelkey">Starting price: </label></td>
+                                        <td><label className="labelkey">Starting price($): </label></td>
                                         <td colSpan={2}> <label className='labelValue'>{selectedAuction[3]}</label> </td>
                                     </tr>
                                     <tr>

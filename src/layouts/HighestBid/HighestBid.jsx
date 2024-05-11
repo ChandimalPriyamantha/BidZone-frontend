@@ -60,8 +60,8 @@ export default function HighestBid() {
                                     </tr>
 
                                     <tr>
-                                        <td><label className="labelkey">Amount: </label></td>
-                                        <td><label className='labelValue'>$ {highestBid["amount"]}</label></td>
+                                        <td><label className="labelkey">Amount ($): </label></td>
+                                        <td><label className='labelValue'>{highestBid["amount"]}</label></td>
                                     </tr>
 
                                     <tr>
