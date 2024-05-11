@@ -6,12 +6,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default function MyAuctions() {
     const { authState } = useOktaAuth();                                                //authState to store the authentication state of the user
     const [myAuctions, setMyAuctions] = useState([]);                                    //myAuctions to store the auctions of the user
     const [selectedAuction, setSelectedAuction] = useState([]);                          //selectedAuction to store the selected auction
+    const history = useHistory();                                                        //history to store the history of the user
 
     const auction = {                                                                   //auction to store the auction details
         id:selectedAuction[0],
@@ -154,7 +156,7 @@ export default function MyAuctions() {
                                             <td>{auction[4]}</td>
                                             <td>{auction[6]}</td>
                                             <td>{auction[3]}</td>
-                                            <td>{auction[2]}</td>
+                                            <td>{auction[1]}</td>
 
                                             
                                         </tr>
@@ -198,7 +200,7 @@ export default function MyAuctions() {
                                     </tr>
                                     <tr>
                                         <td><label className="labelkey">Category: </label></td>
-                                        <td> <label className='labelValue'>{selectedAuction[6]}</label> </td>
+                                        <td><label className='labelValue'>{selectedAuction[6]}</label> </td>
                                         
                                     </tr>
                                     <tr>
@@ -240,10 +242,12 @@ export default function MyAuctions() {
                                     </tr>
                                     
                                     <tr>
-                                        <td colSpan={3}>
+                                        <td colSpan={2}>
                                             &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" className="btn btn-success btn-sm" >Update</button> &nbsp;&nbsp;
-                                            <button type="button" className="btn btn-danger btn-sm" onClick={deleteAuction} >Delete</button> 
-                                            <Link type='button' className='btn btn-primary btn-sm' style={{marginLeft:"13px"}} to={'/chat'}>Chat with Highest Bidder</Link>
+                                            <button type="button" className="btn btn-danger btn-sm" onClick={deleteAuction} >Delete</button>
+                                        </td>
+                                        <td>
+                                        <button type="button" className="btn btn-primary btn-sm" onClick={()=>{history.push(`/highest-bid/${auction.id}/${auction.name}`)}}>View highest bid</button> &nbsp;&nbsp;
                                         </td>
                                     </tr>
                                     

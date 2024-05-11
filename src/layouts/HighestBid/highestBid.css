@@ -3,29 +3,14 @@
     height: 100%;
 }
 
-.table-box {
-    
+.heighest-bid-box {
     margin-inline: auto;
-    margin-top: 20px;
+    margin-top: 25px;
     width: 800px;
     min-height: 300px;
-    height: 450px;
-    overflow-y: auto;
     box-shadow: 0 0 10px rgba(104, 104, 104, 1);
     border-radius: 10px;
 }
-
-.selected-bid-box {
-    margin-inline: auto;
-    margin-top: 20px;
-    width: 600px;
-    min-height: 300px;
-    height: 450px;
-    overflow-y: auto;
-    box-shadow: 0 0 10px rgba(104, 104, 104, 1);
-    border-radius: 10px;
-}
-
 .formBg{
     width : 100%;
     min-height: 200px;
@@ -38,14 +23,6 @@
     padding-right: 0px;
     padding-top: 30px;
     padding-bottom: 10px;
-
-    
-    
-
-}
-
-.table-body:hover {
-    cursor: pointer;
 }
 
 .dataTable {
@@ -55,6 +32,8 @@
 
 .labelkey {
     font-weight: bold;
+    width: 130px;
+    margin-left: 20px;
 }
 
 .labelValue {
@@ -74,23 +53,8 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.textfield:hover {
-    border: 1.5px solid #00000038;
-    box-shadow:  0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-
-
 .alert {
     margin-inline: auto;
     margin-top: 10%;
     text-align: center;
 }
-
-.image{
-    width: 8rem;
-    height: 8rem;
-    border-radius: 50%;
-}
-
-

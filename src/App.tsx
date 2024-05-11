@@ -17,6 +17,7 @@ import MyAuctions from "./layouts/MyAuctions/MyAuctions";
 
 import { Listener } from "./layouts/AuctionPlacePage/Listener";
 import ChatRoom from "./layouts/ChatPage/ChatRoom";
+import HighestBid from "./layouts/HighestBid/HighestBid";
 
 
 const oktaAuth = new OktaAuth(oktaConfig);
@@ -56,6 +57,9 @@ export const App = () => {
             </Route>
             <Route path="/my-auctions">      {/*  List my auctions */}
               <MyAuctions/>
+            </Route>
+            <Route path="/highest-bid/:auction_id/:auction_name">      {/*  Lgo to highest bid page */}
+              <HighestBid/>
             </Route>
             <Route path="/listener"> 
               <Listener />
