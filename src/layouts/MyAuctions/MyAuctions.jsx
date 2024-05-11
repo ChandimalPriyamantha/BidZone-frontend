@@ -86,18 +86,19 @@ export default function MyAuctions() {
 
     const deleteAuction = async () => {                                                  //function to delete the auction
         try{
-            const relatedBids= await axios.get(`http://localhost:8080/api/Bid/getBidOnItem/${selectedAuction[0]}`);     //API to get the bids related to the auction
-            if (relatedBids.data.content.length>0){                                                                     //checking if there are any bids related to the auction
-                toast.error("Cannot delete auction because there are bids for this",{autoClose:2000});                  //toast.error to display error message
+            const relatedBids= await axios.get(`http://localhost:8080/api/MyBids/getBidOnItem/${selectedAuction[0]}`);     //API to get the bids related to the auction
+            console.log(relatedBids.data)
+            if (relatedBids.data.length>0){                                                                     //checking if there are any bids related to the auction
+                toast.error("Cannot delete auction because there are bids for this auction",{autoClose:2000});                  //toast.error to display error message
             }
             else{                                                                                                       //if there are no bids related to the auction
-                try{
+                 try{
                     await axios.delete(`http://localhost:8080/api/MyAuctions/deleteAuction`,{data:auction});                            //API to delete the bid
                     toast.success("Auction deleted successfully",{autoClose:2000});                                     //toast.success to display success message
                     setSelectedAuction([]);
                 }
                 catch(e){
-                    toast.error("Error deleting Auction");
+                     toast.error("Error deleting Auction");
                 }
                 
             }
