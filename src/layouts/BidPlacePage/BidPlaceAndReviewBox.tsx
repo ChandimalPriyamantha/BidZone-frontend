@@ -29,20 +29,19 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (
   const handleCloseModal = () => setIsModalOpen(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
   const [closedTime, setClosedTime] = useState(props.auction?.closingTime);
-  console.log(closedTime);
 
-  console.log(highestBidforaution);
-  console.log(authState?.idToken?.claims.preferred_username);
+
+
+0
 
   useEffect(() => {
     highestBid();
   }, [refreshTrigger]);
 
-  const highestBid = async () => {
-    const result = await axios.get(
-      `http://localhost:8080/api/Bid/getHighestBid/${props.auction?.id}`
-    );
-    console.log(result.data);
+  const highestBid = async ()=>{
+    const result = await axios.get(`http://localhost:8080/api/Bid/getHighestBid/${props.auction?.id}`);
+   
+
     setHighestBidforaution(result.data);
   };
 
@@ -71,8 +70,10 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (
         throw new Error("Network response was not ok");
       }
       handleCloseModal();
-    } catch (error) {
-      console.error("There was a problem with your fetch operation:", error);
+
+
+  } catch (error) {
+
       toast.error("Error placing Bid");
     }
   };

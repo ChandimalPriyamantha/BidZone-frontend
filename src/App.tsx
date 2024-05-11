@@ -13,6 +13,7 @@ import { Security, LoginCallback } from "@okta/okta-react";
 import LoginWidget from "./Auth/LoginWidget";
 
 import MyBids from "./layouts/MyBids/MyBids";
+import MyAuctions from "./layouts/MyAuctions/MyAuctions";
 
 import { Listener } from "./layouts/AuctionPlacePage/Listener";
 import ChatRoom from "./layouts/ChatPage/ChatRoom";
@@ -50,9 +51,12 @@ export const App = () => {
             <Route path="/search">
               <SearchAuctionsPage />
             </Route>
-             <Route path="/my-bids">      {/*  List my bids */}
-                 <MyBids/>
-              </Route>
+            <Route path="/my-bids">      {/*  List my bids */}
+              <MyBids/>
+            </Route>
+            <Route path="/my-auctions">      {/*  List my auctions */}
+              <MyAuctions/>
+            </Route>
             <Route path="/listener"> 
               <Listener />
             </Route>
