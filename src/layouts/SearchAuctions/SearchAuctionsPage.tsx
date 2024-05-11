@@ -95,10 +95,10 @@ export const SearchAuctionsPage = () => {
 
   const categoryField = (value: string) => {
     setCurrentPage(1);
-    if(value.toLowerCase() === 'electronic' || 
-       value.toLowerCase() === 'fashion & beauty' ||
-       value.toLowerCase() === 'Fashion & Beauty' ||
-       value.toLowerCase() === 'Home & Garden')
+    if(value === 'Electronic' || 
+       value === 'Fashion & Beauty' ||
+       value === 'Agriculture' ||
+       value === 'Home & Garden')
       {
        setCategorySelection(value);
        setSearchUrl(`/search/findByCategory?category=${value}&page=0&size=${booksPerPage}`)

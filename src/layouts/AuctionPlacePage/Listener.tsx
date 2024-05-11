@@ -2,6 +2,8 @@ import { useOktaAuth } from "@okta/okta-react";
 import { useEffect, useState } from "react";
 import AddAuctionRequest from "../../models/AddAuctionRequest";
 import { SpinerLoading } from "../Utils/SpinerLoading";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Listener = () => {
   const { oktaAuth, authState } = useOktaAuth();
@@ -9,7 +11,7 @@ export const Listener = () => {
   // add new auction
   const [closingTime, setClosingTime] = useState("");
   const [createdTime, setCreatedTime] = useState("");
-  const [startingPrice, setStartingPrice] = useState(0);
+  const [startingPrice, setStartingPrice] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Select a category");
@@ -90,7 +92,7 @@ export const Listener = () => {
       authState?.isAuthenticated &&
       closingTime !== "" &&
       createdTime !== "" &&
-      startingPrice >= 0 &&
+      parseFloat(startingPrice) >= 0 &&
       name !== "" &&
       description !== "" &&
       category !== "Select a category" &&
@@ -99,7 +101,7 @@ export const Listener = () => {
       const auction: AddAuctionRequest = new AddAuctionRequest(
         closingTime,
         createdTime,
-        startingPrice,
+        parseFloat(startingPrice),
         name,
         description,
         category,
@@ -121,10 +123,12 @@ export const Listener = () => {
         throw new Error("Somthing went wrong!");
       }
 
+    
+
       setIsloading(false);
       setClosingTime("");
       setCreatedTime("");
-      setStartingPrice(0);
+      setStartingPrice("");
       setName("");
       setDescription("");
       setCategory("Select a category");
@@ -136,14 +140,15 @@ export const Listener = () => {
       setIsloading(false);
       setDisplayWarning(true);
       setDisplaySuccess(false);
+     
     }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = parseFloat(e.target.value);
+    const inputValue = (e.target.value);
     // Check if inputValue is a valid number or NaN
-    if (!isNaN(inputValue)) {
-      setStartingPrice(inputValue);
+    if (!isNaN(parseFloat(inputValue))) {
+      setStartingPrice(inputValue.toString());
     }
   }
   return (
@@ -158,8 +163,8 @@ export const Listener = () => {
           All field must be filled out
         </div>
       )}
-      <div className="card">
-        <div className="card-header">Add a new auction</div>
+      <div className="card shadow-lg">
+        <div className="card-header listener-header-color">Add a new auction</div>
         {isLoading ? (
           <SpinerLoading />
         ) : (
@@ -178,7 +183,7 @@ export const Listener = () => {
                   />
                 </div>
                 <div className="col-md-3 mb-3">
-                  <label className="form-label">Starting Price: </label>
+                  <label className="form-label">Starting Price: ($) </label>
                   <input
                     type="text"
                     className="form-control"
