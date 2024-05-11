@@ -11,7 +11,7 @@ const ChatRoom = () => {
     const [publicChats, setPublicChats] = useState([]); 
     const [tab,setTab] =useState("CHATROOM");
     const [userData, setUserData] = useState({
-        username: authState?.idToken?.claims.preferred_username,
+        username: authState?.idToken?.claims.name,
         receivername: '',
         connected: false,
         message: ''
@@ -21,6 +21,7 @@ const ChatRoom = () => {
         console.log(userData);
     }, [userData]);
 
+    console.log(authState?.idToken?.claims.name)
 
     const connect =()=>{
         let Sock = new SockJS('http://localhost:8080/ws');
@@ -119,7 +120,7 @@ const ChatRoom = () => {
         const {value}=event.target;
         setUserData({...userData,"username": value});
     }
-    console.log(handleUsername)
+    // console.log(handleUsername)
 
     const registerUser = () => {
         connect();

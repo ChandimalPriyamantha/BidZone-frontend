@@ -56,7 +56,7 @@ export const Navebar = () => {
                </NavLink>
             </li>
                   </>)
-            )}
+            }
           </ul>
           <ul className="navbar-nav ms-auto">
             {!authState.isAuthenticated ? (
