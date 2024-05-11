@@ -6,9 +6,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
-
 
 export default function MyAuctions() {
     const { authState } = useOktaAuth();                                                //authState to store the authentication state of the user
