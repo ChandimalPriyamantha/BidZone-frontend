@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import './highestBid.css';
+import { Link } from 'react-router-dom';
 
 export default function HighestBid() {
     const selectedAuction= useParams();
@@ -74,7 +75,10 @@ export default function HighestBid() {
                                     </tr>
 
                                     <tr>
-                                        <td colSpan={2} style={{textAlign:"right",paddingRight:"30px"}}><button type='button' className='btn btn-primary btn-sm'>Chat with bidder</button></td>
+                                        <td colSpan={2} style={{textAlign:"right",paddingRight:"30px"}}>
+                                            <Link type='button' className='btn btn-primary btn-sm' style={{marginLeft:"13px"}} to={'/chat'}>Chat with Highest Bidder</Link>
+                                        </td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
