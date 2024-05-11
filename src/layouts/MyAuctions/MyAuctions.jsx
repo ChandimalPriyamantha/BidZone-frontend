@@ -6,6 +6,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 export default function MyAuctions() {
     const { authState } = useOktaAuth();                                                //authState to store the authentication state of the user
@@ -242,7 +243,7 @@ export default function MyAuctions() {
                                         <td colSpan={3}>
                                             &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" className="btn btn-success btn-sm" >Update</button> &nbsp;&nbsp;
                                             <button type="button" className="btn btn-danger btn-sm" onClick={deleteAuction} >Delete</button> 
-                                    
+                                            <Link type='button' className='btn btn-primary btn-sm' style={{marginLeft:"13px"}} to={'/chat'}>Chat with Highest Bidder</Link>
                                         </td>
                                     </tr>
                                     
