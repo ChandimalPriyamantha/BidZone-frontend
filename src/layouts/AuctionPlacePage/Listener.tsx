@@ -139,6 +139,13 @@ export const Listener = () => {
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = parseFloat(e.target.value);
+    // Check if inputValue is a valid number or NaN
+    if (!isNaN(inputValue)) {
+      setStartingPrice(inputValue);
+    }
+  }
   return (
     <div className="container mt-5 mb-5">
       {displaySuccess && (
@@ -177,9 +184,7 @@ export const Listener = () => {
                     className="form-control"
                     name="title"
                     required
-                    onChange={(e) =>
-                      setStartingPrice(parseFloat(e.target.value))
-                    }
+                    onChange={handleChange}
                     value={startingPrice}
                   />
                 </div>
