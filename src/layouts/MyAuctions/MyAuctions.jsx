@@ -6,12 +6,14 @@ import { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export default function MyAuctions() {
     const { authState } = useOktaAuth();                                                //authState to store the authentication state of the user
     const [myAuctions, setMyAuctions] = useState([]);                                    //myAuctions to store the auctions of the user
     const [selectedAuction, setSelectedAuction] = useState([]);                          //selectedAuction to store the selected auction
+    const history = useHistory();                                                        //history to store the history of the user
 
     const auction = {                                                                   //auction to store the auction details
         id:selectedAuction[0],
@@ -94,6 +96,8 @@ export default function MyAuctions() {
                     await axios.delete(`http://localhost:8080/api/MyAuctions/deleteAuction`,{data:auction});                            //API to delete the bid
                     toast.success("Auction deleted successfully",{autoClose:2000});                                     //toast.success to display success message
                     setSelectedAuction([]);
+                    setMyAuctions([]);
+                    loadMyAuctions();
                 }
                 catch(e){
                      toast.error("Error deleting Auction");
@@ -105,10 +109,9 @@ export default function MyAuctions() {
             toast.error("Error in loading related bids");
         }
 
-        const timeout = setTimeout(() => {                                                                          //timeout to reload the auctions
-            setMyAuctions([]);
-            loadMyAuctions();
-          }, 2000);
+        
+        
+          
 
         
         
@@ -118,7 +121,7 @@ export default function MyAuctions() {
 
     useEffect(() => {                                                                   //useEffect to load the auctions
         loadMyAuctions();                                                               //loading the auctions
-    }, [myUserName,selectedAuction]);
+    }, [myUserName]);
 
 
 
@@ -139,7 +142,7 @@ export default function MyAuctions() {
                             <th scope="col"></th>
                             <th scope="col">Item</th>
                             <th scope="col">Category</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Price ($)</th>
                             <th scope="col">Closing time</th>
                             
                             </tr>
@@ -150,11 +153,11 @@ export default function MyAuctions() {
                                     
                                     
                                         <tr key={index} onClick={()=>{loadSelectedAuction(index)}}>
-                                            <th scope="row">{index+1}</th>
+                                            <td scope="row">{index+1}</td>
                                             <td>{auction[4]}</td>
                                             <td>{auction[6]}</td>
                                             <td>{auction[3]}</td>
-                                            <td>{auction[2]}</td>
+                                            <td>{auction[1]}</td>
 
                                             
                                         </tr>
@@ -186,19 +189,12 @@ export default function MyAuctions() {
                                     <tr>
                                         <td><label className="labelkey">Item: </label></td>
                                         <td> <label className='labelValue'>{selectedAuction[4]}</label> </td>
-                                        {
-                                            selectedAuction[7]=="" || selectedAuction[7]==null? (
-                                                <th rowSpan={3}><center><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png" alt="auction image" className="img-thumbnail image"/></center></th>
-                                            ):(
-                                                <th rowSpan={3}><center><img src={selectedAuction[7]} alt="auction image" className="img-thumbnail image"/></center></th>
-                                            )
-                                        }
                                         
 
                                     </tr>
                                     <tr>
                                         <td><label className="labelkey">Category: </label></td>
-                                        <td> <label className='labelValue'>{selectedAuction[6]}</label> </td>
+                                        <td><label className='labelValue'>{selectedAuction[6]}</label> </td>
                                         
                                     </tr>
                                     <tr>
@@ -206,12 +202,12 @@ export default function MyAuctions() {
                                         <td> <label className='labelValue'>{selectedAuction[2]}</label> </td>
                                     </tr>
                                     <tr>
-                                        <td><label className="labelkey">Starting price: </label></td>
-                                        <td colSpan={2}> <label className='labelValue'>{selectedAuction[3]}</label> </td>
+                                        <td><label className="labelkey">Starting price($): </label></td>
+                                        <td > <label className='labelValue'>{selectedAuction[3]}</label> </td>
                                     </tr>
                                     <tr>
                                         <td><label className="labelkey">End at: </label></td>
-                                        <td colSpan={2}> 
+                                        <td > 
                                         
                                         <input type="date" 
                                         value={selectedAuction[1]}
@@ -227,7 +223,7 @@ export default function MyAuctions() {
                                     </tr>
                                     <tr>
                                         <td><label className="labelkey">Description: </label></td>
-                                        <td colSpan={2}> 
+                                        <td > 
                                             <textarea required rows={4} className='labelValue textfield' value={selectedAuction[5]} 
                                                 onChange={(e)=>{
                                                     e.preventDefault()
@@ -240,10 +236,12 @@ export default function MyAuctions() {
                                     </tr>
                                     
                                     <tr>
-                                        <td colSpan={3}>
+                                        <td >
                                             &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" className="btn btn-success btn-sm" >Update</button> &nbsp;&nbsp;
-                                            <button type="button" className="btn btn-danger btn-sm" onClick={deleteAuction} >Delete</button> 
-                                            <Link type='button' className='btn btn-primary btn-sm' style={{marginLeft:"13px"}} to={'/chat'}>Chat with Highest Bidder</Link>
+                                            <button type="button" className="btn btn-danger btn-sm" onClick={deleteAuction} >Delete</button>
+                                        </td>
+                                        <td>
+                                        <button type="button" className="btn btn-primary btn-sm" onClick={()=>{history.push(`/highest-bid/${auction.id}/${auction.name}`)}}>View highest bid</button> &nbsp;&nbsp;
                                         </td>
                                     </tr>
                                     

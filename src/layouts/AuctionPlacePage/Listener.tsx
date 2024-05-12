@@ -2,6 +2,8 @@ import { useOktaAuth } from "@okta/okta-react";
 import { useEffect, useState } from "react";
 import AddAuctionRequest from "../../models/AddAuctionRequest";
 import { SpinerLoading } from "../Utils/SpinerLoading";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Listener = () => {
   const { oktaAuth, authState } = useOktaAuth();
@@ -9,7 +11,7 @@ export const Listener = () => {
   // add new auction
   const [closingTime, setClosingTime] = useState("");
   const [createdTime, setCreatedTime] = useState("");
-  const [startingPrice, setStartingPrice] = useState(0);
+  const [startingPrice, setStartingPrice] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Select a category");
@@ -23,6 +25,7 @@ export const Listener = () => {
   // to handle Spring Loading
   const [isLoading, setIsloading] = useState(false);
 
+  // to get username from okta 
   useEffect(() => {
     if (authState && authState.isAuthenticated) {
       oktaAuth.getUser().then((user) => {
@@ -36,17 +39,20 @@ export const Listener = () => {
     }
   }, [authState, oktaAuth]);
 
+  // to handle categery selection 
   function categoryField(value: string) {
     setCategory(value);
   }
 
+  // to convert image type into blob type
   async function base64ConversionForImages(e: any) {
     if (e.target.files[0]) {
       getBase64(e.target.files[0]);
-      setCreatedTime(formattedDateTime);
+      setCreatedTime(formattedDateTime); // to handle current date & time
     }
   }
 
+  // to create the format of time & date to save into database
   const formatDateTimeForDatabase = (dateTime: Date): string => {
     const year = dateTime.getFullYear();
     const month = dateTime.getMonth() + 1;
@@ -66,6 +72,7 @@ export const Listener = () => {
   // Format currentDateTime for database
   const formattedDateTime = formatDateTimeForDatabase(new Date());
 
+  // to handle reading of images
   function getBase64(file: any) {
     let reader = new FileReader();
     reader.readAsDataURL(file);
@@ -77,6 +84,7 @@ export const Listener = () => {
     };
   }
 
+  // to handle submition of new auction
   async function submitNewAuction() {
     setIsloading(true);
     const url = `http://localhost:8080/api/auction/addAuction`;
@@ -84,7 +92,7 @@ export const Listener = () => {
       authState?.isAuthenticated &&
       closingTime !== "" &&
       createdTime !== "" &&
-      startingPrice >= 0 &&
+      parseFloat(startingPrice) >= 0 &&
       name !== "" &&
       description !== "" &&
       category !== "Select a category" &&
@@ -93,7 +101,7 @@ export const Listener = () => {
       const auction: AddAuctionRequest = new AddAuctionRequest(
         closingTime,
         createdTime,
-        startingPrice,
+        parseFloat(startingPrice),
         name,
         description,
         category,
@@ -115,10 +123,12 @@ export const Listener = () => {
         throw new Error("Somthing went wrong!");
       }
 
+    
+
       setIsloading(false);
       setClosingTime("");
       setCreatedTime("");
-      setStartingPrice(0);
+      setStartingPrice("");
       setName("");
       setDescription("");
       setCategory("Select a category");
@@ -130,9 +140,17 @@ export const Listener = () => {
       setIsloading(false);
       setDisplayWarning(true);
       setDisplaySuccess(false);
+     
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = (e.target.value);
+    // Check if inputValue is a valid number or NaN
+    if (!isNaN(parseFloat(inputValue))) {
+      setStartingPrice(inputValue.toString());
+    }
+  }
   return (
     <div className="container mt-5 mb-5">
       {displaySuccess && (
@@ -145,8 +163,8 @@ export const Listener = () => {
           All field must be filled out
         </div>
       )}
-      <div className="card">
-        <div className="card-header">Add a new auction</div>
+      <div className="card shadow-lg">
+        <div className="card-header listener-header-color">Add a new auction</div>
         {isLoading ? (
           <SpinerLoading />
         ) : (
@@ -165,15 +183,13 @@ export const Listener = () => {
                   />
                 </div>
                 <div className="col-md-3 mb-3">
-                  <label className="form-label">Starting Price: </label>
+                  <label className="form-label">Starting Price: ($) </label>
                   <input
                     type="text"
                     className="form-control"
                     name="title"
                     required
-                    onChange={(e) =>
-                      setStartingPrice(parseFloat(e.target.value))
-                    }
+                    onChange={handleChange}
                     value={startingPrice}
                   />
                 </div>
