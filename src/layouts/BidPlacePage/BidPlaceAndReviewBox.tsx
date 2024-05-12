@@ -32,7 +32,6 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (
 
 
 
-0
 
   useEffect(() => {
     highestBid();
@@ -145,7 +144,7 @@ export const BidPlaceAndReviewBox: React.FC<BidPlaceAndReviewBoxProps> = (
           </div>
         ) : (
           <div>
-            <Link to="/#" className="btn btn-success btn-lg">
+            <Link to="/login" className="btn btn-success btn-lg">
               Sign in
             </Link>
             <hr />
