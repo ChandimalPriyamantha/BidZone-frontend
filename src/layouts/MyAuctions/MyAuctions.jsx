@@ -236,12 +236,10 @@ export default function MyAuctions() {
                                     </tr>
                                     
                                     <tr>
-                                        <td >
+                                        <td colSpan={2}>
                                             &nbsp;&nbsp;&nbsp;&nbsp;<button type="submit" className="btn btn-success btn-sm" >Update</button> &nbsp;&nbsp;
-                                            <button type="button" className="btn btn-danger btn-sm" onClick={deleteAuction} >Delete</button>
-                                        </td>
-                                        <td>
-                                        <button type="button" className="btn btn-primary btn-sm" onClick={()=>{history.push(`/highest-bid/${auction.id}/${auction.name}`)}}>View highest bid</button> &nbsp;&nbsp;
+                                            <button type="button" className="btn btn-danger btn-sm" onClick={deleteAuction} >Delete</button>&nbsp;&nbsp;
+                                            <button type="button" className="btn btn-primary btn-sm" onClick={()=>{history.push(`/highest-bid/${auction.id}/${auction.name}`)}}>View highest bid</button> &nbsp;&nbsp;
                                         </td>
                                     </tr>
                                     
