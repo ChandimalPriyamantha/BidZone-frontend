@@ -13,7 +13,7 @@ export const AuctionsServices = () => {
                     </h1>
                     <p className='lead'>
                         If you cannot find what you are looking for,
-                        send our library admin's a personal message!
+                        send our auction admin's a personal message!
                     </p>
                     <div className='d-grid gap-2 justify-content-md-start mb-4 mb-lg-3'>
                     {authState?.isAuthenticated ? (
@@ -22,7 +22,7 @@ export const AuctionsServices = () => {
                   className="btn main-color btn-lg text-white"
                   to="#"
                 >
-                  Explor Library Services
+                  Explor auction Services
                 </Link>
               ) : (
                 <Link className="btn main-color btn-lg text-white" to="/login">
