@@ -15,6 +15,16 @@ export default function MyBids() {
 
   const [selectedBid, setSelectedBid] = useState([]); //selectedBid to store the bid selected by the user
 
+  const[notification,setNotification] = useState(
+    {
+      id: "",
+      bidder_name: "",
+      auction_id: "",
+      description: "",
+      state: ""
+    }
+  ); //notification to store the notification details
+  console.log(notification)
   const bid = {
     //bid object to store the selected bid details
     id: selectedBid[2],
@@ -24,6 +34,11 @@ export default function MyBids() {
     auction_id: selectedBid[6],
     user_name: selectedBid[7],
   };
+
+
+  
+
+
 
   var myUserName = authState?.idToken?.claims.preferred_username; //myUserName to store the username of the user
 
@@ -55,6 +70,9 @@ export default function MyBids() {
   const loadSelectedBid = async (index) => {
     //loadSelectedBid function to get the selected bid details
     setSelectedBid(myBids[index]); //setting the selectedBid with the bid details
+
+    console.log(myBids[index][6])
+    fetchNotification(myBids[index][6]);
   };
 
   const updateBid = async () => {
@@ -96,7 +114,32 @@ export default function MyBids() {
         
         setMyBids([]);                                      //setting the myBids to empty
         loadMyBids();                                       //loadMyBids function to get the bids placed by the user
-    },[myUserName,selectedBid]);                                                              //dependency array to re-run the useEffect when myUserName changes
+     
+    },[myUserName,selectedBid]);     
+    
+    //dependency array to re-run the useEffect when myUserName changes
+
+
+    const fetchNotification = async (auction_id) => {
+      
+        try{
+        
+        const response = await axios.get(`http://localhost:8080/api/notification/getNotification/${myUserName}/${auction_id}`);
+        console.log(response.data.content)
+        const data=response.data.content;
+        console.log(data)
+        if(response.data.content==null || response.data.content=="" || response.data.content==undefined)
+          {
+              setNotification(null);
+          }
+        setNotification(data);
+        console.log(myUserName,auction_id);
+        console.log(notification)
+      
+        }catch(e){
+          setNotification(null);
+        }
+    }
 
 
   return (
@@ -116,6 +159,7 @@ export default function MyBids() {
                   <th scope="col">Auction</th>
                   <th scope="col">Bade at</th>
                   <th scope="col">Bade amount</th>
+                  
                 </tr>
               </thead>
               <tbody className="table-body">
@@ -185,6 +229,17 @@ export default function MyBids() {
                         }}></input>  */}
                       </td>
                     </tr>
+                    
+                    {notification && (
+                        <tr>
+                          <td>
+                            <label className="labelkey">Highest Bid: </label>
+                          </td>
+                          <td>
+                            <label className='labelValue'>{notification.description}</label>
+                          </td>
+                        </tr>
+                      )}
                     
                     <tr>
                       <td>
